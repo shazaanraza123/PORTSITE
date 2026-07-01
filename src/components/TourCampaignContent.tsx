@@ -22,10 +22,20 @@ function aspectClass(aspect?: ProjectImage["aspect"]) {
   }
 }
 
-function TourVideoFrame({ video }: { video: TourVideo }) {
+function fitClass(fit?: "cover" | "contain") {
+  return fit === "contain" ? "tour-showcase-frame--contain" : "";
+}
+
+function TourVideoFrame({
+  video,
+  large = false,
+}: {
+  video: TourVideo;
+  large?: boolean;
+}) {
   return (
     <div
-      className={`tour-video-frame ${aspectClass(video.aspect ?? "4/3")}`}
+      className={`tour-video-frame ${large ? "tour-showcase-frame" : ""} ${fitClass(video.fit)} ${aspectClass(video.aspect ?? "4/3")}`}
     >
       <video
         src={video.src}
@@ -41,13 +51,19 @@ function TourVideoFrame({ video }: { video: TourVideo }) {
   );
 }
 
-function TourImageFrame({ image }: { image: ProjectImage }) {
+function TourImageFrame({
+  image,
+  large = false,
+}: {
+  image: ProjectImage;
+  large?: boolean;
+}) {
   const aspectKey = image.aspect?.replace("/", "-") ?? "4-3";
 
   if (!image.src) {
     return (
       <div
-        className={`image-placeholder tour-image-frame tour-image-frame--${aspectKey}`}
+        className={`image-placeholder tour-image-frame ${large ? "tour-showcase-frame" : ""} tour-image-frame--${aspectKey}`}
       >
         <span>{image.placeholder}</span>
       </div>
@@ -55,7 +71,9 @@ function TourImageFrame({ image }: { image: ProjectImage }) {
   }
 
   return (
-    <div className={`tour-image-frame tour-image-frame--${aspectKey}`}>
+    <div
+      className={`tour-image-frame ${large ? "tour-showcase-frame" : ""} ${fitClass(image.fit)} tour-image-frame--${aspectKey}`}
+    >
       <img src={image.src} alt={image.alt} loading="lazy" />
     </div>
   );
@@ -76,28 +94,30 @@ function TourReel({ stop }: { stop: TourStop }) {
 
       <div className="tour-reel-track">
         {stop.videos.map((video) => (
-          <TourVideoFrame key={video.src} video={video} />
+          <TourVideoFrame key={video.src} video={video} large />
         ))}
       </div>
     </div>
   );
 }
 
-function StopMedia({ stop }: { stop: TourStop }) {
-  const hasImages = stop.images.some((img) => img.src);
-  if (!hasImages) return null;
+function StopShowcase({ stop }: { stop: TourStop }) {
+  const images = stop.images.filter((img) => img.src);
+  const videos = stop.videos ?? [];
+  const hasMedia = images.length > 0 || videos.length > 0;
 
-  const isPosterPair =
-    stop.images.length === 2 &&
-    stop.images.some((img) => img.aspect === "9/16");
+  if (!hasMedia || stop.featured) return null;
 
   return (
-    <div
-      className={`tour-stop-media ${isPosterPair ? "tour-stop-media--posters" : ""}`}
-    >
-      {stop.images.map((img) => (
-        <TourImageFrame key={img.alt} image={img} />
-      ))}
+    <div className="tour-stop-showcase">
+      <div className="tour-stop-showcase-track">
+        {videos.map((video) => (
+          <TourVideoFrame key={video.src} video={video} large />
+        ))}
+        {images.map((img) => (
+          <TourImageFrame key={img.src} image={img} large />
+        ))}
+      </div>
     </div>
   );
 }
@@ -110,8 +130,6 @@ function TourStopSection({
   index: number;
 }) {
   const isDark = index % 2 === 1;
-  const showMedia =
-    stop.images.some((img) => img.src) && !stop.featured;
 
   return (
     <article
@@ -135,15 +153,9 @@ function TourStopSection({
             {stop.campaign}
           </p>
         </div>
-
-        {showMedia && (
-          <div className="tour-stop-visual">
-            <div className="tour-stop-visual-inner">
-              <StopMedia stop={stop} />
-            </div>
-          </div>
-        )}
       </div>
+
+      <StopShowcase stop={stop} />
     </article>
   );
 }
@@ -158,7 +170,11 @@ export function TourCampaignContent({ project }: { project: Project }) {
 
       <div className="tour-stops">
         {stops.map((stop, index) => (
-          <TourStopSection key={stop.city} stop={stop} index={index} />
+          <TourStopSection
+            key={`${stop.city}-${stop.descriptor}`}
+            stop={stop}
+            index={index}
+          />
         ))}
       </div>
 

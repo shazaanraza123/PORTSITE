@@ -20,6 +20,7 @@ export interface ProjectImage {
   placeholder: string;
   type?: "image" | "video";
   aspect?: "16/9" | "4/3" | "1/1" | "3/4" | "9/16";
+  fit?: "cover" | "contain";
   span?: string;
 }
 
@@ -40,6 +41,7 @@ export interface TourVideo {
   alt: string;
   poster?: string;
   aspect?: "16/9" | "4/3" | "9/16";
+  fit?: "cover" | "contain";
 }
 
 export interface TourStop {
@@ -233,7 +235,7 @@ export const projects: Project[] = [
     ongoing: true,
     tourStops: [
       {
-        city: "Istanbul, Turkey",
+        city: "Istanbul, Türkiye",
         descriptor: "RECORD-BREAKING STADIUM · LARGEST PERFORMANCE OF ALL TIME",
         campaign:
           "Led the full media rollout for the Istanbul date — the biggest stadium performance in history. Designed and distributed promotional visuals, coordinated multi-platform fan page pushes, and produced on-site content throughout show week to maximize global reach.",
@@ -294,6 +296,64 @@ export const projects: Project[] = [
         ],
       },
       {
+        city: "Los Angeles, CA",
+        descriptor: "CRYPTO ARENA · DON LA",
+        campaign:
+          "Supported the Crypto Arena date with on-site content production and real-time social updates. Captured show-day BTS, produced hype video edits, and coordinated live coverage across fan pages to keep the Don LA moment moving across every channel.",
+        videos: [
+          {
+            src: "/projects/ye-tour/don-la-reel.mp4",
+            alt: "Crypto Arena — Don LA show footage",
+            poster: "/projects/ye-tour/don-la-bts-1.jpeg",
+            aspect: "4/3",
+            fit: "contain",
+          },
+        ],
+        images: [
+          {
+            src: "/projects/ye-tour/don-la-bts-1.jpeg",
+            alt: "Crypto Arena — on-site show production BTS",
+            placeholder: "[Image: Don LA BTS]",
+            aspect: "3/4",
+            fit: "contain",
+          },
+        ],
+      },
+      {
+        city: "Chicago, IL",
+        descriptor: "SOLDIER FIELD · MIDWEST STOP",
+        campaign:
+          "Designed and pushed promotional visuals for the Chicago date at Soldier Field. Coordinated fan page content across Instagram and TikTok, built pre-show hype with platform-native graphics, and supported on-site media production throughout show week.",
+        images: [
+          {
+            src: "/projects/ye-tour/chicago-promo.png",
+            alt: "Chicago — Soldier Field tour promo visual",
+            placeholder: "[Image: Chicago promo]",
+            aspect: "3/4",
+          },
+        ],
+      },
+      {
+        city: "Tampa, FL",
+        descriptor: "RAYMOND JAMES STADIUM · FLORIDA DATE",
+        campaign:
+          "Rolled out the Tampa show campaign with event graphics, social-first promo assets, and coordinated fan page pushes ahead of doors. Produced hype content tailored for Instagram and TikTok to drive engagement across the Southeast market.",
+        images: [
+          {
+            src: "/projects/ye-tour/tampa-promo.png",
+            alt: "Tampa — Raymond James Stadium promo visual",
+            placeholder: "[Image: Tampa promo]",
+            aspect: "3/4",
+          },
+          {
+            src: "/projects/ye-tour/tampa-bts.png",
+            alt: "Tampa — show day promo and production visual",
+            placeholder: "[Image: Tampa BTS]",
+            aspect: "3/4",
+          },
+        ],
+      },
+      {
         city: "Mexico City, Mexico",
         descriptor: "INTERNATIONAL TOUR STOP · LATAM ROLLOUT",
         campaign:
@@ -303,13 +363,15 @@ export const projects: Project[] = [
             src: "/projects/ye-tour/mexico-promo.jpg",
             alt: "Mexico City — official event promo graphic",
             placeholder: "[Image: Mexico promo]",
-            aspect: "9/16",
+            aspect: "3/4",
+            fit: "contain",
           },
           {
             src: "/projects/ye-tour/mexico-stadium.jpg",
             alt: "Mexico City — live stadium performance",
             placeholder: "[Image: Mexico stadium]",
             aspect: "3/4",
+            fit: "contain",
           },
         ],
       },
@@ -318,6 +380,15 @@ export const projects: Project[] = [
         descriptor: "GELREDOME · EUROPEAN TOUR",
         campaign:
           "Supported the European leg with promotional graphics, hype video edits, and real-time content coordination for GelreDome Stadium. Attended the show to produce live updates and collaborate with the team on the ground.",
+        videos: [
+          {
+            src: "/projects/ye-tour/arnhem-show-reel.mp4",
+            alt: "Arnhem — GelreDome live show footage",
+            poster: "/projects/ye-tour/arnhem-promo-crowd.jpeg",
+            aspect: "16/9",
+            fit: "contain",
+          },
+        ],
         images: [
           {
             src: "/projects/ye-tour/arnhem-promo-dates.jpeg",
