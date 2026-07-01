@@ -7,6 +7,7 @@ import { TourCampaignContent } from "./TourCampaignContent";
 import { YeezyMarketingContent } from "./YeezyMarketingContent";
 import { LaApparelContent } from "./LaApparelContent";
 import { CreativeJourneyContent } from "./CreativeJourneyContent";
+import { KwlStudioContent } from "./KwlStudioContent";
 
 interface ProjectSectionProps {
   project: Project;
@@ -83,7 +84,7 @@ export function ProjectSection({ project, nextHref }: ProjectSectionProps) {
       </div>
 
       <div
-        className={`${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" ? "" : "reveal bg-[var(--color-cream)]"} ${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" ? "pb-0" : "pb-16 lg:pb-24"}`}
+        className={`${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" || project.layout === "kwl-studio" ? "" : "reveal bg-[var(--color-cream)]"} ${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" || project.layout === "kwl-studio" ? "pb-0" : "pb-16 lg:pb-24"}`}
       >
         {project.layout === "artist-marketing" ? (
           <div className="px-6 md:px-10 lg:px-16">
@@ -97,6 +98,8 @@ export function ProjectSection({ project, nextHref }: ProjectSectionProps) {
           <LaApparelContent project={project} />
         ) : project.layout === "creative-journey" ? (
           <CreativeJourneyContent project={project} />
+        ) : project.layout === "kwl-studio" ? (
+          <KwlStudioContent project={project} />
         ) : (
           <div className="px-6 md:px-10 lg:px-16">
             {project.stats && <StatsCallouts stats={project.stats} />}

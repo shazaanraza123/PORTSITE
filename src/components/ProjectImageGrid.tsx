@@ -23,6 +23,25 @@ function ImageFrame({ image }: { image: ProjectImage }) {
       ? "object-contain"
       : "object-cover";
 
+  if (image.src && image.type === "video") {
+    return (
+      <div
+        className={`overflow-hidden bg-[var(--color-tan)]/10 ${aspectClass(image.aspect)} ${image.span ?? ""}`}
+      >
+        <video
+          src={image.src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={image.alt}
+          className={`h-full w-full ${fitClass}`}
+        />
+      </div>
+    );
+  }
+
   if (image.src) {
     return (
       <div

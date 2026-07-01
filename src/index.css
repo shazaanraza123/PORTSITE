@@ -1078,6 +1078,171 @@ body {
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
 }
 
+/* KWL Studio — editorial brand spread */
+.kwl-studio {
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-cream) 0%,
+      color-mix(in srgb, var(--color-tan) 8%, var(--color-cream)) 100%
+    );
+  padding: 2.5rem 1.5rem 4.5rem;
+}
+
+@media (min-width: 768px) {
+  .kwl-studio {
+    padding: 3rem 2.5rem 5.5rem;
+  }
+}
+
+.kwl-studio-inner {
+  max-width: 44rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.kwl-studio-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-tan) 45%, transparent);
+}
+
+.kwl-studio-eyebrow {
+  color: var(--color-tan);
+}
+
+.kwl-studio-tagline {
+  max-width: 22rem;
+  color: var(--color-dark);
+}
+
+.kwl-studio-pair {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .kwl-studio-pair {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.125rem;
+    align-items: start;
+  }
+
+  .kwl-studio-frame--store {
+    margin-top: 1.25rem;
+  }
+}
+
+.kwl-studio-frame,
+.kwl-studio-brand,
+.kwl-studio-reel {
+  position: relative;
+  margin: 0;
+}
+
+.kwl-studio-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-tan);
+}
+
+.kwl-studio-frame-media {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-tan) 50%, transparent);
+  background: color-mix(in srgb, var(--color-tan) 6%, var(--color-cream));
+  box-shadow: 0 18px 40px -28px color-mix(in srgb, var(--color-dark) 35%, transparent);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kwl-studio-frame:hover .kwl-studio-frame-media {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 44px -24px color-mix(in srgb, var(--color-dark) 40%, transparent);
+}
+
+.kwl-studio-frame-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.kwl-studio-brand-panel {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-tan) 35%, transparent);
+  background: var(--color-dark);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-tan) 20%, transparent),
+    0 24px 48px -26px color-mix(in srgb, var(--color-dark) 55%, transparent);
+}
+
+.kwl-studio-brand-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.kwl-studio-reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  padding-top: 0.5rem;
+}
+
+.kwl-studio-reel-head {
+  display: flex;
+  width: min(100%, 26rem);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.kwl-studio-reel-head .label-accent {
+  color: var(--color-tan);
+}
+
+.kwl-studio-reel-meta {
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-dark) 55%, transparent);
+}
+
+.kwl-studio-reel-screen {
+  width: min(100%, 26rem);
+  overflow: hidden;
+  border-radius: 0.2rem;
+  border: 1px solid color-mix(in srgb, var(--color-tan) 45%, transparent);
+  background: var(--color-dark);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-tan) 15%, transparent),
+    0 20px 44px -24px color-mix(in srgb, var(--color-dark) 45%, transparent);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kwl-studio-reel:hover .kwl-studio-reel-screen {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-tan) 35%, transparent),
+    0 28px 52px -22px color-mix(in srgb, var(--color-dark) 50%, transparent);
+}
+
+.kwl-studio-reel-screen video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 /* Creative Journey — press feature + dual social + hashtag impact */
 .creative-journey {
   background:

@@ -11,12 +11,14 @@ export type ProjectLayout =
   | "tour-campaign"
   | "yeezy-marketing"
   | "la-apparel"
-  | "creative-journey";
+  | "creative-journey"
+  | "kwl-studio";
 
 export interface ProjectImage {
   src: string;
   alt: string;
   placeholder: string;
+  type?: "image" | "video";
   aspect?: "16/9" | "4/3" | "1/1" | "3/4" | "9/16";
   span?: string;
 }
@@ -105,6 +107,13 @@ export interface CreativeJourneyMedia {
   };
 }
 
+export interface KwlStudioMedia {
+  stock: { src: string; alt: string };
+  storefront: { src: string; alt: string };
+  brand: { src: string; alt: string };
+  reel: TourVideo;
+}
+
 export interface Project {
   id: number;
   slug: string;
@@ -125,6 +134,7 @@ export interface Project {
   tourStops?: TourStop[];
   marketingCampaigns?: MarketingCampaign[];
   laApparelMedia?: LaApparelMedia;
+  kwlStudioMedia?: KwlStudioMedia;
   creativeJourneyMedia?: CreativeJourneyMedia;
   approach?: { heading: string; body: string };
   ongoing?: boolean;
@@ -183,40 +193,27 @@ export const projects: Project[] = [
     context: "Self-directed streetwear label",
     overview:
       "End-to-end brand identity, merch design, and e-commerce buildout for KWL Studio, a Chicago streetwear label. Full creative pipeline from concept to sale — logo system, apparel graphics, lookbook, and Shopify storefront.",
-    images: [
-      {
-        src: "",
-        alt: "Logo system on black",
-        placeholder: "[Image: Logo system on black]",
-        aspect: "4/3",
+    images: [],
+    layout: "kwl-studio",
+    kwlStudioMedia: {
+      stock: {
+        src: "/projects/kwl-studio/stock.png",
+        alt: "KWL Studio apparel stock imagery",
       },
-      {
-        src: "",
-        alt: "Hoodie mockup front",
-        placeholder: "[Image: Hoodie mockup front]",
-        aspect: "4/3",
+      storefront: {
+        src: "/projects/kwl-studio/storefront.png",
+        alt: "KWL Studio Shopify storefront",
       },
-      {
-        src: "",
-        alt: "Tee graphic detail",
-        placeholder: "[Image: Tee graphic detail]",
-        aspect: "4/3",
+      brand: {
+        src: "/projects/kwl-studio/brand.png",
+        alt: "KWL Studio logo system on black",
       },
-      {
-        src: "",
-        alt: "Shopify storefront screenshot",
-        placeholder: "[Image: Shopify storefront screenshot]",
-        aspect: "4/3",
-      },
-      {
-        src: "",
-        alt: "Brand guidelines spread",
-        placeholder: "[Image: Brand guidelines spread]",
+      reel: {
+        src: "/projects/kwl-studio/star-reel.mp4",
+        alt: "KWL Studio brand reel",
         aspect: "16/9",
-        span: "col-span-full",
       },
-    ],
-    layout: "2col-full",
+    },
   },
   {
     id: 3,
