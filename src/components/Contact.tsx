@@ -76,7 +76,7 @@ export function Contact() {
         <footer className="reveal mt-16 flex flex-col gap-2 border-t border-[var(--color-cream)]/20 pt-6 text-xs font-light sm:flex-row sm:justify-between">
           <span>© 2025 Shazaan Raza</span>
           <span className="label-accent text-[var(--color-cream)]/70">
-            Design & Code — Shazaan Raza
+            Design & Code · Shazaan Raza
           </span>
         </footer>
       </div>

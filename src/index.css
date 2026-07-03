@@ -821,6 +821,257 @@ body {
   }
 }
 
+/* Artist marketing — cinematic artist showcases */
+.artist-campaign {
+  overflow: hidden;
+}
+
+.artist-blocks {
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-block {
+  padding: 3.5rem 0 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-tan) 40%, transparent);
+}
+
+.artist-block--dark {
+  background: color-mix(in srgb, var(--color-dark) 6%, var(--color-cream));
+}
+
+@media (min-width: 768px) {
+  .artist-block {
+    padding: 4.5rem 0 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .artist-block {
+    padding: 5rem 0 0;
+  }
+}
+
+.artist-block-inner {
+  max-width: 52rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .artist-block-inner {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .artist-block-inner {
+    padding-inline: 4rem;
+  }
+}
+
+.artist-block-index {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--color-tan);
+}
+
+.artist-block-handle {
+  color: var(--color-dark);
+  letter-spacing: -0.02em;
+}
+
+.artist-block--dark .artist-block-handle,
+.artist-block-text {
+  color: var(--color-dark);
+}
+
+.artist-block--dark .label-accent {
+  color: var(--color-tan);
+}
+
+.artist-showcase {
+  position: relative;
+  margin-top: 2.5rem;
+  padding: 2.5rem 0 3.5rem;
+  background:
+    radial-gradient(
+      ellipse 80% 90% at 50% 0%,
+      color-mix(in srgb, var(--color-tan) 20%, transparent),
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--color-dark) 5%, var(--color-cream));
+}
+
+.artist-block--dark .artist-showcase {
+  background:
+    radial-gradient(
+      ellipse 80% 90% at 50% 0%,
+      color-mix(in srgb, var(--color-tan) 24%, transparent),
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--color-dark) 12%, var(--color-cream));
+}
+
+@media (min-width: 768px) {
+  .artist-showcase {
+    margin-top: 3rem;
+    padding: 3rem 0 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .artist-showcase {
+    margin-top: 3.5rem;
+    padding: 3.5rem 0 4.5rem;
+  }
+}
+
+.artist-showcase-track {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  justify-content: center;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.5rem;
+  padding: 0.5rem 1.5rem 1rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.artist-showcase-track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .artist-showcase-track {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .artist-showcase-track {
+    padding-inline: 4rem;
+  }
+}
+
+.artist-showcase-frame {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  overflow: hidden;
+  border-radius: 0.625rem;
+  background: #000;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-tan) 38%, transparent),
+    0 32px 64px -24px rgba(0, 0, 0, 0.8);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+}
+
+.artist-showcase-frame.aspect-\[16\/9\],
+.artist-showcase-frame.aspect-\[4\/3\],
+.artist-showcase-frame.aspect-\[3\/4\],
+.artist-showcase-frame.aspect-\[9\/16\],
+.artist-showcase-frame.aspect-square,
+.artist-showcase-frame--1-1 {
+  display: flex;
+  align-items: stretch;
+}
+
+.artist-showcase-frame:hover {
+  transform: scale(1.02) translateY(-4px);
+}
+
+.artist-showcase-frame.aspect-\[16\/9\] {
+  width: min(24rem, 88vw);
+  aspect-ratio: 16 / 9;
+}
+
+.artist-showcase-frame.aspect-\[4\/3\] {
+  width: min(20rem, 82vw);
+  aspect-ratio: 4 / 3;
+}
+
+.artist-showcase-frame.aspect-\[3\/4\] {
+  width: min(15rem, 74vw);
+  aspect-ratio: 3 / 4;
+}
+
+.artist-showcase-frame.aspect-\[9\/16\] {
+  width: min(12rem, 36vw);
+  aspect-ratio: 9 / 16;
+}
+
+.artist-showcase-frame.aspect-square,
+.artist-showcase-frame--1-1 {
+  width: min(16rem, 76vw);
+  aspect-ratio: 1 / 1;
+}
+
+.artist-showcase-frame video,
+.artist-showcase-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.artist-showcase-frame--contain video,
+.artist-showcase-frame--contain img {
+  object-fit: contain;
+}
+
+.artist-showcase-track > :only-child.artist-showcase-frame {
+  width: min(22rem, 90vw);
+}
+
+.artist-showcase-track > :only-child.artist-showcase-frame.aspect-\[16\/9\] {
+  width: min(28rem, 92vw);
+}
+
+.artist-showcase-track > :only-child.artist-showcase-frame.aspect-\[4\/3\],
+.artist-showcase-track > :only-child.artist-showcase-frame--4-3 {
+  width: min(26rem, 90vw);
+}
+
+.artist-showcase-track > :only-child.artist-showcase-frame.aspect-square,
+.artist-showcase-track > :only-child.artist-showcase-frame--1-1 {
+  width: min(20rem, 84vw);
+}
+
+.artist-approach {
+  background: var(--color-dark);
+  padding: 4rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .artist-approach {
+    padding: 5rem 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .artist-approach {
+    padding: 6rem 4rem;
+  }
+}
+
+.artist-approach-inner {
+  display: grid;
+  gap: 2.5rem;
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .artist-approach-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
 /* Yeezy marketing — Vultures brutalist showcase */
 .yeezy-marketing {
   position: relative;

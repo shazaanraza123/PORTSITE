@@ -20,7 +20,7 @@ export function Nav() {
           href="#hero"
           className="label-accent text-[var(--color-dark)] no-underline"
         >
-          SHAZAAN RAZA — WORK
+          SHAZAAN RAZA · WORK
         </a>
 
         <button

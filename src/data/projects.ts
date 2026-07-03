@@ -34,6 +34,7 @@ export interface ArtistSubsection {
   descriptor: string;
   campaign: string;
   images: ProjectImage[];
+  videos?: TourVideo[];
 }
 
 export interface TourVideo {
@@ -42,6 +43,8 @@ export interface TourVideo {
   poster?: string;
   aspect?: "16/9" | "4/3" | "9/16";
   fit?: "cover" | "contain";
+  objectPosition?: string;
+  zoom?: number;
 }
 
 export interface TourStop {
@@ -154,29 +157,29 @@ export const projects: Project[] = [
     tools: "Figma · Swift · Frontend Frameworks",
     context: "Yeezy (Internal)",
     overview:
-      "Frontend UI design and feature planning for the official YZY mobile app. Built interactive prototypes in Swift and Figma to support executive product pitches, ensuring full aesthetic alignment with Yeezy's brand language.",
+      "UI design and feature planning for the YZY mobile app. Built prototypes in Swift and Figma for product pitches, keeping everything aligned with Yeezy's look.",
     images: [
       {
         src: "/projects/yzy-mobile/hero-device.png",
-        alt: "YZY app device mockup — Play tab tracklist",
+        alt: "YZY app device mockup, Play tab tracklist",
         placeholder: "[Image: YZY app device mockup]",
         aspect: "3/4",
       },
       {
         src: "/projects/yzy-mobile/shop.png",
-        alt: "Shop screen — product grid on SPLY tab",
+        alt: "Shop screen, product grid on SPLY tab",
         placeholder: "[Image: Shop screen]",
         aspect: "9/16",
       },
       {
         src: "/projects/yzy-mobile/album-tracklist.png",
-        alt: "Music player — Vultures 1 album tracklist",
+        alt: "Music player, Vultures 1 album tracklist",
         placeholder: "[Image: Album tracklist]",
         aspect: "9/16",
       },
       {
         src: "/projects/yzy-mobile/discography.png",
-        alt: "Discography grid — album catalog on SNDS tab",
+        alt: "Discography grid, album catalog on SNDS tab",
         placeholder: "[Image: Discography grid]",
         aspect: "9/16",
       },
@@ -194,7 +197,7 @@ export const projects: Project[] = [
     tools: "Figma · Adobe Illustrator · Photoshop · Shopify",
     context: "Self-directed streetwear label",
     overview:
-      "End-to-end brand identity, merch design, and e-commerce buildout for KWL Studio, a Chicago streetwear label. Full creative pipeline from concept to sale — logo system, apparel graphics, lookbook, and Shopify storefront.",
+      "Full brand build for KWL Studio, a Chicago streetwear label. Logo, merch graphics, lookbook, and Shopify store from scratch.",
     images: [],
     layout: "kwl-studio",
     kwlStudioMedia: {
@@ -224,38 +227,38 @@ export const projects: Project[] = [
     title: ["Ye Tour", "Media Campaign."],
     contentsName: "Ye Tour Media Campaign",
     category: "Campaign Strategy",
-    year: "2025 — Ongoing",
+    year: "2025, Ongoing",
     role: "Tour Media Coordinator & Campaign Designer",
     tools: "CapCut · Adobe Premiere · Photoshop · Instagram · TikTok · X · Facebook",
-    context: "Ye World Tour — Multi-City Campaign",
+    context: "Ye World Tour, multi city rollout",
     overview:
-      "Planned and executed the media marketing strategy for Ye's world tour across multiple continents — from SoFi Stadium in Los Angeles and Mexico City to the record-breaking Istanbul performance (the largest stadium show of all time) and GelreDome in Arnhem. Currently supporting upcoming dates in Albania, Spain, and Portugal. Owned cross-platform social strategy: curating fan pages and content accounts on Instagram, TikTok, X, and Facebook; designing promotional visuals and hype videos; and coordinating on-site content production at live shows — producing real-time updates, meeting with the team, and capturing show-day content.",
+      "Ran media marketing for Ye's world tour across SoFi, Mexico City, Istanbul, Arnhem, and more. Currently helping with upcoming dates in Albania, Spain, and Portugal. Managed fan pages on Instagram, TikTok, X, and Facebook, made promos and hype videos, and shot content on the ground at shows.",
     images: [],
     layout: "tour-campaign",
     ongoing: true,
     tourStops: [
       {
         city: "Istanbul, Türkiye",
-        descriptor: "RECORD-BREAKING STADIUM · LARGEST PERFORMANCE OF ALL TIME",
+        descriptor: "RECORD BREAKING STADIUM · LARGEST SHOW OF ALL TIME",
         campaign:
-          "Led the full media rollout for the Istanbul date — the biggest stadium performance in history. Designed and distributed promotional visuals, coordinated multi-platform fan page pushes, and produced on-site content throughout show week to maximize global reach.",
+          "Led media for the Istanbul show, the biggest stadium performance on the tour. Promos, fan page pushes, and on site content all week.",
         featured: true,
         videos: [
           {
             src: "/projects/ye-tour/turkey-show-1.mp4",
-            alt: "Istanbul show — crowd and stage production",
+            alt: "Istanbul show, crowd and stage production",
             poster: "/projects/ye-tour/turkey-stadium.jpeg",
             aspect: "4/3",
           },
           {
             src: "/projects/ye-tour/turkey-show-2.mp4",
-            alt: "Istanbul show — live performance footage",
+            alt: "Istanbul show, live performance footage",
             poster: "/projects/ye-tour/turkey-stadium.jpeg",
             aspect: "4/3",
           },
           {
             src: "/projects/ye-tour/turkey-show-3.mp4",
-            alt: "Istanbul show — cinematic wide shot",
+            alt: "Istanbul show, wide shot",
             poster: "/projects/ye-tour/turkey-promo.jpeg",
             aspect: "16/9",
           },
@@ -263,7 +266,7 @@ export const projects: Project[] = [
         images: [
           {
             src: "/projects/ye-tour/turkey-stadium.jpeg",
-            alt: "Istanbul stadium performance — record-breaking show",
+            alt: "Istanbul stadium performance, record breaking show",
             placeholder: "[Image: Istanbul stadium]",
             aspect: "4/3",
           },
@@ -279,17 +282,17 @@ export const projects: Project[] = [
         city: "Los Angeles, CA",
         descriptor: "SOFI STADIUM · US KICKOFF",
         campaign:
-          "Planned the social media strategy and content calendar for the SoFi Stadium date. Managed and instructed curation pages across platforms on what to push, when to push it, and how to build pre-show momentum — including celestial promo asset systems and behind-the-scenes production content.",
+          "Planned the social rollout for SoFi. Told curation pages what to post and when, built pre show momentum with promo assets and BTS content.",
         images: [
           {
             src: "/projects/ye-tour/sofi-stage.jpeg",
-            alt: "SoFi Stadium — stage setup and suspended projection",
+            alt: "SoFi Stadium stage setup and suspended projection",
             placeholder: "[Image: SoFi stage]",
             aspect: "3/4",
           },
           {
             src: "/projects/ye-tour/sofi-assets-grid.jpeg",
-            alt: "SoFi campaign — promo assets and production BTS",
+            alt: "SoFi campaign promo assets and production BTS",
             placeholder: "[Image: SoFi assets]",
             aspect: "3/4",
           },
@@ -299,11 +302,11 @@ export const projects: Project[] = [
         city: "Los Angeles, CA",
         descriptor: "CRYPTO ARENA · DON LA",
         campaign:
-          "Supported the Crypto Arena date with on-site content production and real-time social updates. Captured show-day BTS, produced hype video edits, and coordinated live coverage across fan pages to keep the Don LA moment moving across every channel.",
+          "On site at Crypto Arena for Don LA. BTS content, hype edits, and live updates across fan pages.",
         videos: [
           {
             src: "/projects/ye-tour/don-la-reel.mp4",
-            alt: "Crypto Arena — Don LA show footage",
+            alt: "Crypto Arena Don LA show footage",
             poster: "/projects/ye-tour/don-la-bts-1.jpeg",
             aspect: "4/3",
             fit: "contain",
@@ -312,7 +315,7 @@ export const projects: Project[] = [
         images: [
           {
             src: "/projects/ye-tour/don-la-bts-1.jpeg",
-            alt: "Crypto Arena — on-site show production BTS",
+            alt: "Crypto Arena on site show production BTS",
             placeholder: "[Image: Don LA BTS]",
             aspect: "3/4",
             fit: "contain",
@@ -323,11 +326,11 @@ export const projects: Project[] = [
         city: "Chicago, IL",
         descriptor: "SOLDIER FIELD · MIDWEST STOP",
         campaign:
-          "Designed and pushed promotional visuals for the Chicago date at Soldier Field. Coordinated fan page content across Instagram and TikTok, built pre-show hype with platform-native graphics, and supported on-site media production throughout show week.",
+          "Promo visuals for Soldier Field. Coordinated fan page posts on Instagram and TikTok and supported media production during show week.",
         images: [
           {
             src: "/projects/ye-tour/chicago-promo.png",
-            alt: "Chicago — Soldier Field tour promo visual",
+            alt: "Chicago Soldier Field tour promo visual",
             placeholder: "[Image: Chicago promo]",
             aspect: "3/4",
           },
@@ -337,17 +340,26 @@ export const projects: Project[] = [
         city: "Tampa, FL",
         descriptor: "RAYMOND JAMES STADIUM · FLORIDA DATE",
         campaign:
-          "Rolled out the Tampa show campaign with event graphics, social-first promo assets, and coordinated fan page pushes ahead of doors. Produced hype content tailored for Instagram and TikTok to drive engagement across the Southeast market.",
+          "Tampa campaign with event graphics, social promos, and fan page pushes. Hype content for Instagram and TikTok ahead of the show.",
+        videos: [
+          {
+            src: "/projects/ye-tour/tampa-show-reel.mp4",
+            alt: "Tampa show day hype reel",
+            poster: "/projects/ye-tour/tampa-promo.png",
+            aspect: "4/3",
+            fit: "contain",
+          },
+        ],
         images: [
           {
             src: "/projects/ye-tour/tampa-promo.png",
-            alt: "Tampa — Raymond James Stadium promo visual",
+            alt: "Tampa Raymond James Stadium promo visual",
             placeholder: "[Image: Tampa promo]",
             aspect: "3/4",
           },
           {
             src: "/projects/ye-tour/tampa-bts.png",
-            alt: "Tampa — show day promo and production visual",
+            alt: "Tampa show day promo and production visual",
             placeholder: "[Image: Tampa BTS]",
             aspect: "3/4",
           },
@@ -357,18 +369,18 @@ export const projects: Project[] = [
         city: "Mexico City, Mexico",
         descriptor: "INTERNATIONAL TOUR STOP · LATAM ROLLOUT",
         campaign:
-          "Developed platform-native promo assets and coordinated cross-channel hype content for the Mexico City show at Monumental Plaza de Toros. Designed event graphics, merch pre-sale materials, and worked with fan pages to drive engagement ahead of doors opening.",
+          "Promo assets and hype content for Mexico City at Monumental Plaza de Toros. Event graphics, merch presale stuff, and fan page coordination before doors.",
         images: [
           {
             src: "/projects/ye-tour/mexico-promo.jpg",
-            alt: "Mexico City — official event promo graphic",
+            alt: "Mexico City official event promo graphic",
             placeholder: "[Image: Mexico promo]",
             aspect: "3/4",
             fit: "contain",
           },
           {
             src: "/projects/ye-tour/mexico-stadium.jpg",
-            alt: "Mexico City — live stadium performance",
+            alt: "Mexico City live stadium performance",
             placeholder: "[Image: Mexico stadium]",
             aspect: "3/4",
             fit: "contain",
@@ -379,11 +391,11 @@ export const projects: Project[] = [
         city: "Arnhem, Netherlands",
         descriptor: "GELREDOME · EUROPEAN TOUR",
         campaign:
-          "Supported the European leg with promotional graphics, hype video edits, and real-time content coordination for GelreDome Stadium. Attended the show to produce live updates and collaborate with the team on the ground.",
+          "Promos, hype edits, and live content coordination for GelreDome. At the show shooting updates and working with the team on the ground.",
         videos: [
           {
             src: "/projects/ye-tour/arnhem-show-reel.mp4",
-            alt: "Arnhem — GelreDome live show footage",
+            alt: "Arnhem GelreDome live show footage",
             poster: "/projects/ye-tour/arnhem-promo-crowd.jpeg",
             aspect: "16/9",
             fit: "contain",
@@ -392,13 +404,13 @@ export const projects: Project[] = [
         images: [
           {
             src: "/projects/ye-tour/arnhem-promo-dates.jpeg",
-            alt: "Arnhem — sold out show promo with dates",
+            alt: "Arnhem sold out show promo with dates",
             placeholder: "[Image: Arnhem promo]",
             aspect: "3/4",
           },
           {
             src: "/projects/ye-tour/arnhem-promo-crowd.jpeg",
-            alt: "Arnhem — stadium crowd promo visual",
+            alt: "Arnhem stadium crowd promo visual",
             placeholder: "[Image: Arnhem crowd]",
             aspect: "3/4",
           },
@@ -408,14 +420,14 @@ export const projects: Project[] = [
         city: "Albania, Spain & Portugal",
         descriptor: "UPCOMING DATES · IN PRODUCTION",
         campaign:
-          "Currently helping plan the media strategy for upcoming tour dates across Albania, Spain, and Portugal — building promo assets, content systems, and rollout plans for shows still in the works.",
+          "Planning media for upcoming dates in Albania, Spain, and Portugal. Promo assets and rollout plans still in progress.",
         images: [],
         upcoming: true,
       },
     ],
     approach: {
-      heading: "THE APPROACH.",
-      body: "Every show gets its own rollout plan — platform-native content, coordinated fan page pushes, and promo assets built to drive hype before doors open. On the ground, it's real-time coverage and tight coordination with the team to keep the moment moving across every channel.",
+      heading: "HOW IT RUNS.",
+      body: "Each show gets its own plan. Content for each platform, fan page pushes, promos to build hype before doors. On show day it's live coverage and staying locked in with the team.",
     },
   },
   {
@@ -428,9 +440,9 @@ export const projects: Project[] = [
     year: "2024",
     role: "Marketing Designer & Content Strategist",
     tools: "Photoshop · Illustrator · CapCut · Premiere · Instagram · TikTok · X",
-    context: "Yeezy — Vultures Album & Clothing",
+    context: "Yeezy, Vultures album and clothing",
     overview:
-      "Led marketing for Yeezy's Vultures album rollout and Yeezy clothing line — spanning listening party activations, promotional graphics, hype videos, and cross-platform social strategy. Worked on Vultures listening experiences in Chicago, New York, and beyond: creating event graphics, producing video content, coordinating with the team to push assets across social media, and supporting guerrilla-style street marketing. For Yeezy clothing, developed SPLY product campaigns, launch visuals, and content designed to drive apparel drops across digital channels.",
+      "Marketing for the Vultures album rollout and Yeezy clothing line. Listening party graphics, hype videos, and social strategy for events in Chicago, New York, and more. Street marketing, event promos, BTS content. For clothing, SPLY campaigns, launch visuals, and content for drops on Instagram and TikTok.",
     images: [],
     layout: "yeezy-marketing",
     marketingCampaigns: [
@@ -438,7 +450,7 @@ export const projects: Project[] = [
         name: "Vultures",
         descriptor: "ALBUM MARKETING · LISTENING PARTIES · SOCIAL ROLLOUT",
         campaign:
-          "Full marketing support for the Vultures album — from listening party graphics and event promos to BTS content and street-level ¥$ activations. Created visuals and videos for listening experiences at United Center Chicago, UBS Arena New York, and other dates. Worked with the team to plan and push content across Instagram, TikTok, and X, building hype ahead of each drop.",
+          "Full marketing for the Vultures album. Listening party graphics, event promos, BTS content, and street level ¥$ activations. Visuals and videos for United Center Chicago, UBS Arena New York, and other dates. Planned and pushed content on Instagram, TikTok, and X ahead of each drop.",
         theme: "vultures",
         featured: true,
         images: [],
@@ -446,57 +458,57 @@ export const projects: Project[] = [
           {
             type: "image",
             src: "/projects/yeezy-marketing/vultures/globe.png",
-            alt: "Vultures — global campaign graphic",
+            alt: "Vultures global campaign graphic",
             aspect: "1/1",
           },
           {
             type: "video",
             src: "/projects/yeezy-marketing/vultures/bg-reel.mp4",
-            alt: "Vultures campaign — atmospheric reel",
+            alt: "Vultures campaign atmospheric reel",
             poster: "/projects/yeezy-marketing/vultures/globe.png",
             aspect: "16/9",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/vultures/united-center.jpg",
-            alt: "Vultures — United Center Chicago listening party promo",
+            alt: "Vultures United Center Chicago listening party promo",
             aspect: "16/9",
           },
           {
             type: "video",
             src: "/projects/yeezy-marketing/vultures/promo-reel.mp4",
-            alt: "Vultures campaign — promotional video",
+            alt: "Vultures campaign promotional video",
             poster: "/projects/yeezy-marketing/vultures/spotlight.png",
             aspect: "16/9",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/vultures/listening-party.jpg",
-            alt: "Vultures — New York listening experience promo",
+            alt: "Vultures New York listening experience promo",
             aspect: "3/4",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/vultures/bts-ice-sculpture.jpg",
-            alt: "Vultures listening party — BTS with ice sculpture",
+            alt: "Vultures listening party BTS with ice sculpture",
             aspect: "3/4",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/vultures/listening-moment.jpg",
-            alt: "Vultures listening party — live moment",
+            alt: "Vultures listening party live moment",
             aspect: "3/4",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/vultures/street-marketing.jpg",
-            alt: "Vultures — ¥$ street stencil marketing",
+            alt: "Vultures ¥$ street stencil marketing",
             aspect: "3/4",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/vultures/spotlight.png",
-            alt: "Vultures — spotlight campaign graphic",
+            alt: "Vultures spotlight campaign graphic",
             aspect: "1/1",
           },
         ],
@@ -505,55 +517,55 @@ export const projects: Project[] = [
         name: "Yeezy Clothing",
         descriptor: "APPAREL MARKETING · SPLY · PRODUCT LAUNCHES",
         campaign:
-          "Marketing and content for the Yeezy clothing line — product launch graphics, SPLY campaign visuals, and social content designed to drive apparel drops. Produced promo videos and static assets highlighting key pieces including Yeezy Pods and seasonal collections, optimized for platform-native rollout across Instagram and TikTok.",
+          "Marketing and content for Yeezy clothing. Product launch graphics, SPLY campaign visuals, and social content for apparel drops. Promo videos and static assets for Yeezy Pods and seasonal collections on Instagram and TikTok.",
         theme: "clothing",
         images: [],
         mediaItems: [
           {
             type: "image",
             src: "/projects/yeezy-marketing/clothing/sply-grid.jpg",
-            alt: "Yeezy clothing — SPLY product grid campaign",
+            alt: "Yeezy clothing SPLY product grid campaign",
             aspect: "1/1",
           },
           {
             type: "video",
             src: "/projects/yeezy-marketing/clothing/reel-1.mp4",
-            alt: "Yeezy clothing — SPLY campaign reel",
+            alt: "Yeezy clothing SPLY campaign reel",
             poster: "/projects/yeezy-marketing/clothing/sply-grid.jpg",
             aspect: "9/16",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/clothing/yeezy-pods.jpg",
-            alt: "Yeezy Pods — celebrity placement marketing",
+            alt: "Yeezy Pods celebrity placement marketing",
             aspect: "9/16",
           },
           {
             type: "video",
             src: "/projects/yeezy-marketing/clothing/reel-2.mp4",
-            alt: "Yeezy clothing — product launch reel",
+            alt: "Yeezy clothing product launch reel",
             poster: "/projects/yeezy-marketing/clothing/yeezy-pods.jpg",
             aspect: "9/16",
           },
           {
             type: "video",
             src: "/projects/yeezy-marketing/clothing/reel-3.mp4",
-            alt: "Yeezy clothing — seasonal collection reel",
+            alt: "Yeezy clothing seasonal collection reel",
             poster: "/projects/yeezy-marketing/clothing/crest-logo.jpg",
             aspect: "9/16",
           },
           {
             type: "image",
             src: "/projects/yeezy-marketing/clothing/crest-logo.jpg",
-            alt: "Yeezy clothing — crest logo campaign",
+            alt: "Yeezy clothing crest logo campaign",
             aspect: "1/1",
           },
         ],
       },
     ],
     approach: {
-      heading: "THE APPROACH.",
-      body: "Raw, high-contrast, platform-native — every asset built to feel like it belongs to the Vultures world. Listening parties get their own visual identity. Clothing gets clean product storytelling. Both push through the same coordinated social rollout.",
+      heading: "HOW IT LOOKS.",
+      body: "Raw and high contrast, everything should feel like it belongs to the Vultures world. Listening parties get their own visual identity. Clothing gets clean product shots. Both run through the same social rollout.",
     },
   },
   {
@@ -563,36 +575,36 @@ export const projects: Project[] = [
     title: ["LA Apparel", "Campaign."],
     contentsName: "LA Apparel Campaign",
     category: "Brand Marketing",
-    year: "2023–2024",
+    year: "2023 to 2024",
     role: "Visual Brand Designer & Content Strategist",
     tools: "Figma · Photoshop · Illustrator · CapCut · Premiere",
-    context: "Los Angeles Apparel — Brand Partnership",
+    context: "Los Angeles Apparel brand partnership",
     overview:
-      "Developed visual brand content and marketing campaign assets for Los Angeles Apparel. Designed platform-native content systems across Instagram and TikTok, creating on-brand graphics, promotional assets, and short-form video content aligned with LA Apparel's aesthetic — minimal, California, quality-forward.",
+      "Visual content and marketing assets for Los Angeles Apparel. Graphics, promos, and short form video for Instagram and TikTok that fit their minimal California look.",
     images: [],
     layout: "la-apparel",
     laApparelMedia: {
       wides: [
         {
           src: "/projects/la-apparel/campaign-1.mp4",
-          alt: "LA Apparel — campaign film 1",
+          alt: "LA Apparel campaign film 1",
           aspect: "16/9",
         },
         {
           src: "/projects/la-apparel/campaign-2.mp4",
-          alt: "LA Apparel — campaign film 2",
+          alt: "LA Apparel campaign film 2",
           aspect: "16/9",
         },
       ],
       reels: [
         {
           src: "/projects/la-apparel/story-1.mp4",
-          alt: "LA Apparel — Instagram story reel 1",
+          alt: "LA Apparel Instagram story reel 1",
           aspect: "9/16",
         },
         {
           src: "/projects/la-apparel/story-2.mp4",
-          alt: "LA Apparel — Instagram story reel 2",
+          alt: "LA Apparel Instagram story reel 2",
           aspect: "9/16",
         },
       ],
@@ -605,24 +617,24 @@ export const projects: Project[] = [
     title: ["The Creative", "Journey."],
     contentsName: "The Creative Journey",
     category: "Content Creation",
-    year: "2022–Present",
+    year: "2022 to Present",
     role: "Creator, Designer, Strategist",
     tools: "CapCut · Premiere · Photoshop · Figma · Instagram · TikTok",
-    context: "Personal Brand — @Yelova911 & @kanyewestlover911",
+    context: "Personal brand, @Yelova911 and @kanyewestlover911",
     overview:
-      "Three years of building creative work in public. From launching @Yelova911 and @kanyewestlover911 into multi-million-follower culture pages — featured by Rolling Stone — to running KWL Studio's content and producing viral short-form edits. Every post, edit, and campaign was a self-directed experiment in what resonates at scale.",
+      "Three years building in public. Grew @Yelova911 and @kanyewestlover911 into pages with millions of followers, got featured in Rolling Stone, ran content for KWL Studio, and made short form edits that actually hit. Every post was just me figuring out what works at scale.",
     stats: [
-      { value: "3M+", label: "Combined Reach Across Platforms" },
-      { value: "20–30M+", label: "Views Generated Per Ye Tour Show" },
-      { value: "50+", label: "Brands and Creators Collaborated With" },
-      { value: "4+", label: "Years Creating Consistently" },
+      { value: "3M+", label: "Combined reach across platforms" },
+      { value: "20 to 30M+", label: "Views per Ye tour show" },
+      { value: "50+", label: "Brands and creators worked with" },
+      { value: "4+", label: "Years creating consistently" },
     ],
     images: [],
     layout: "creative-journey",
     creativeJourneyMedia: {
       press: {
         src: "/projects/creative-journey/rolling-stone-feature.jpeg",
-        alt: "Rolling Stone feature — Why Kanye West's Biggest Stan Account Is Still Going Strong",
+        alt: "Rolling Stone feature on @kanyewestlover911",
         outlet: "Rolling Stone",
         headline:
           "Why Kanye West's Biggest Stan Account Is Still Going Strong",
@@ -633,20 +645,20 @@ export const projects: Project[] = [
           platform: "tiktok",
           handle: "@kanyewestlover911",
           src: "/projects/creative-journey/tiktok-profile.jpeg",
-          alt: "TikTok profile — @kanyewestlover911 with 1.8M followers",
+          alt: "TikTok profile @kanyewestlover911 with 1.8M followers",
           highlight: "1.8M followers · 54.4M likes",
         },
         {
           platform: "instagram",
           handle: "@yelova911",
           src: "/projects/creative-journey/instagram-profile.jpeg",
-          alt: "Instagram profile — @yelova911 with 427K followers",
+          alt: "Instagram profile @yelova911 with 427K followers",
           highlight: "427K followers · 1,068 posts",
         },
       ],
       hashtag: {
         src: "/projects/creative-journey/hashtag-impact.jpeg",
-        alt: "#kanyewestlover911 — 51.7K posts on TikTok",
+        alt: "#kanyewestlover911 with 51.7K posts on TikTok",
         tag: "#kanyewestlover911",
         posts: "51.7K",
       },
@@ -659,80 +671,64 @@ export const projects: Project[] = [
     title: ["Artist", "Marketing."],
     contentsName: "Artist Marketing Campaign",
     category: "Campaign Development",
-    year: "2025 — Ongoing",
+    year: "2025, Ongoing",
     role: "Marketing Strategist & Content Director",
     tools: "CapCut · Premiere · Photoshop · TikTok · Instagram · X",
-    context: "Active Client Work — 3 Emerging Artists",
+    context: "Client work with 3 artists",
     overview:
-      "Currently developing and executing full marketing and content campaigns for three emerging artists — @mysp8c, @kinoftw, and @talinwya. Work spans viral TikTok strategy, Instagram content systems, promotional graphics, hype video edits, and platform-specific rollout planning. Each artist gets a tailored campaign built around their sound, aesthetic, and audience growth goals.",
+      "Running marketing and content for @mysp8c, @kinoftw, and @oodaredevil. TikTok and Instagram strategy, promo graphics, hype edits, and rollout planning tailored to each artist's sound and how they want to grow.",
     images: [],
     layout: "artist-marketing",
     ongoing: true,
     artists: [
       {
         handle: "@mysp8c",
-        descriptor: "INDEPENDENT ARTIST · SPOTIFY · EMERGING",
+        descriptor: "SPOTIFY · TIKTOK · INSTAGRAM",
         campaign:
-          "Building platform presence and viral content strategy around existing Spotify catalog. Focus on short-form video content to convert streams into an engaged social following.",
-        images: [
+          "Growing his socials off the music he already has on Spotify. Short form edits and clips for TikTok and Instagram that turn streams into real followers.",
+        videos: [
           {
-            src: "",
-            alt: "@mysp8c content asset",
-            placeholder: "[Image: @mysp8c content asset]",
+            src: "/projects/artist-marketing/mysp8c/reel-2.mp4",
+            alt: "@mysp8c short form hype clip",
             aspect: "4/3",
-          },
-          {
-            src: "",
-            alt: "Campaign graphic for mysp8c",
-            placeholder: "[Image: Campaign graphic for mysp8c]",
-            aspect: "4/3",
+            objectPosition: "54% center",
+            zoom: 1.05,
           },
         ],
+        images: [],
       },
       {
         handle: "@kinoftw",
-        descriptor: "EMERGING ARTIST · CONTENT · BRAND",
+        descriptor: "TIKTOK · INSTAGRAM · VISUALS",
         campaign:
-          "Developing visual identity and content system to establish a consistent and recognizable presence across TikTok and Instagram.",
-        images: [
+          "Building out his look and content so it feels consistent on TikTok and Instagram. Cover art, promo graphics, and hype edits that match how his music actually sounds.",
+        videos: [
           {
-            src: "",
-            alt: "@kinoftw content asset",
-            placeholder: "[Image: @kinoftw content asset]",
-            aspect: "4/3",
-          },
-          {
-            src: "",
-            alt: "Campaign graphic for kinoftw",
-            placeholder: "[Image: Campaign graphic for kinoftw]",
+            src: "/projects/artist-marketing/kino/reel.mp4",
+            alt: "@kinoftw campaign hype reel",
             aspect: "4/3",
           },
         ],
+        images: [],
       },
       {
-        handle: "@talinwya",
-        descriptor: "EMERGING ARTIST · MUSIC · SOCIAL",
+        handle: "@oodaredevil",
+        descriptor: "TIKTOK · HYPE EDITS · ROLLOUT",
         campaign:
-          "Platform rollout strategy and promotional content designed to grow audience and drive discovery across short-form video platforms.",
-        images: [
+          "Running his rollout on short form platforms. Fast edits that grab attention and send people to the music.",
+        videos: [
           {
-            src: "",
-            alt: "@talinwya content asset",
-            placeholder: "[Image: @talinwya content asset]",
-            aspect: "4/3",
-          },
-          {
-            src: "",
-            alt: "Campaign graphic for talinwya",
-            placeholder: "[Image: Campaign graphic for talinwya]",
+            src: "/projects/artist-marketing/oodaredevil/reel.mp4",
+            alt: "@oodaredevil hype video edit",
             aspect: "4/3",
           },
         ],
+        images: [],
       },
     ],
     approach: {
-      heading: "THE PROCESS.",
-      body: "Every campaign starts with understanding the artist's sound and visual world. From there — content systems, platform strategy, graphic assets, and video edits built to travel. The goal is always the same: turn great music into moments people share.",
+      heading: "HOW I WORK.",
+      body: "I start by getting the artist's sound and what they're going for visually. Then it's content, platform strategy, graphics, and edits that actually work online. Main goal is turning good music into stuff people want to share.",
     },
   },
 ];

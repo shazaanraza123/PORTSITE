@@ -100,8 +100,8 @@ export function CreativeJourneyContent({ project }: { project: Project }) {
               {media.hashtag.tag}
             </p>
             <p className="cj-impact-text">
-              One hashtag — proof the audience wasn&apos;t passive, it was
-              building with us.
+              One hashtag that showed the audience wasn&apos;t just watching,
+              they were building with us.
             </p>
           </div>
         </div>

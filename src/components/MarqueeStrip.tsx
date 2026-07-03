@@ -1,5 +1,5 @@
 const MARQUEE_TEXT =
-  "DESIGN — BRANDING — CAMPAIGNS — PRODUCT — CODE — STRATEGY — ";
+  "DESIGN · BRANDING · CAMPAIGNS · PRODUCT · CODE · STRATEGY · ";
 
 export function MarqueeStrip() {
   const repeated = MARQUEE_TEXT.repeat(4);

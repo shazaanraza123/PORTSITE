@@ -10,7 +10,7 @@ export function KwlStudioContent({ project }: { project: Project }) {
         <header className="kwl-studio-intro">
           <p className="label-accent kwl-studio-eyebrow">Chicago streetwear</p>
           <p className="kwl-studio-tagline font-display text-lg leading-relaxed md:text-xl">
-            From stock to storefront — the full pipeline.
+            From stock to storefront. The full pipeline.
           </p>
         </header>
 
