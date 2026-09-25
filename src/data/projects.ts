@@ -12,7 +12,8 @@ export type ProjectLayout =
   | "yeezy-marketing"
   | "la-apparel"
   | "creative-journey"
-  | "kwl-studio";
+  | "kwl-studio"
+  | "spotify-samples";
 
 export interface ProjectImage {
   src: string;
@@ -188,8 +189,25 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    slug: "kwl-studio",
+    slug: "spotify-samples",
     number: "02",
+    title: ["Spotify", "Samples."],
+    contentsName: "Spotify Samples",
+    contentsCategory: "Product Design",
+    category: "Product Design · Frontend Development",
+    year: "2026",
+    role: "Product Designer & Frontend Developer",
+    tools: "Figma · React · TypeScript · Vite",
+    context: "Independent Spotify product concept",
+    overview:
+      "Spotify Samples is a product concept that turns music sampling into a discovery experience. I designed the experience in Figma and then built a working React + TypeScript prototype where listeners can discover sample origins, compare the original and sampled songs, follow sample chains, and explore related music.",
+    images: [],
+    layout: "spotify-samples",
+  },
+  {
+    id: 3,
+    slug: "kwl-studio",
+    number: "03",
     title: ["KWL", "Studio."],
     category: "Brand Identity",
     year: "2023",
@@ -221,9 +239,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 3,
+    id: 4,
     slug: "ye-tour",
-    number: "03",
+    number: "04",
     title: ["Ye Tour", "Media Campaign."],
     contentsName: "Ye Tour Media Campaign",
     category: "Campaign Strategy",
@@ -431,9 +449,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 4,
+    id: 5,
     slug: "yeezy-marketing",
-    number: "04",
+    number: "05",
     title: ["Yeezy Marketing", "Campaign."],
     contentsName: "Yeezy Marketing Campaign",
     category: "Brand Marketing",
@@ -569,9 +587,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 5,
+    id: 6,
     slug: "la-apparel",
-    number: "05",
+    number: "06",
     title: ["LA Apparel", "Campaign."],
     contentsName: "LA Apparel Campaign",
     category: "Brand Marketing",
@@ -611,9 +629,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 6,
+    id: 7,
     slug: "creative-journey",
-    number: "06",
+    number: "07",
     title: ["The Creative", "Journey."],
     contentsName: "The Creative Journey",
     category: "Content Creation",
@@ -665,9 +683,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 7,
+    id: 8,
     slug: "artist-marketing",
-    number: "07",
+    number: "08",
     title: ["Artist", "Marketing."],
     contentsName: "Artist Marketing Campaign",
     category: "Campaign Development",

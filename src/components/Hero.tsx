@@ -1,4 +1,5 @@
 import { MarqueeStrip } from "./MarqueeStrip";
+import { PROJECT_COUNT } from "../data/projects";
 
 export function Hero() {
   return (
@@ -21,7 +22,7 @@ export function Hero() {
             Product Designer & Developer
           </p>
           <p className="font-body text-sm font-light text-[var(--color-dark)] md:text-right">
-            Chicago, IL · 2025 · 7 Projects
+            Chicago, IL · 2025 · {PROJECT_COUNT} Projects
           </p>
         </div>
       </div>
