@@ -13,7 +13,8 @@ export type ProjectLayout =
   | "la-apparel"
   | "creative-journey"
   | "kwl-studio"
-  | "spotify-samples";
+  | "spotify-samples"
+  | "spotify-map";
 
 export interface ProjectImage {
   src: string;
@@ -144,6 +145,7 @@ export interface Project {
   creativeJourneyMedia?: CreativeJourneyMedia;
   approach?: { heading: string; body: string };
   ongoing?: boolean;
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [
@@ -206,8 +208,27 @@ export const projects: Project[] = [
   },
   {
     id: 3,
-    slug: "kwl-studio",
+    slug: "spotify-map",
     number: "03",
+    title: ["Spotify", "Map."],
+    contentsName: "Spotify Map",
+    contentsCategory: "Product Design",
+    category: "Product Design · Frontend Development",
+    year: "2026",
+    role: "Product Designer & Frontend Developer",
+    tools: "React · TypeScript · Vite · CSS · Figma · Vercel",
+    context: "Independent product concept",
+    overview:
+      "A geographic music discovery experience for exploring cities, scenes, and sounds around the world.",
+    images: [],
+    layout: "spotify-map",
+    liveUrl:
+      "https://spotify-samples-8gia-e0j3hj9id-shazaanraza123s-projects.vercel.app/",
+  },
+  {
+    id: 4,
+    slug: "kwl-studio",
+    number: "04",
     title: ["KWL", "Studio."],
     category: "Brand Identity",
     year: "2023",
@@ -239,9 +260,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 4,
+    id: 5,
     slug: "ye-tour",
-    number: "04",
+    number: "05",
     title: ["Ye Tour", "Media Campaign."],
     contentsName: "Ye Tour Media Campaign",
     category: "Campaign Strategy",
@@ -449,9 +470,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 5,
+    id: 6,
     slug: "yeezy-marketing",
-    number: "05",
+    number: "06",
     title: ["Yeezy Marketing", "Campaign."],
     contentsName: "Yeezy Marketing Campaign",
     category: "Brand Marketing",
@@ -587,9 +608,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 6,
+    id: 7,
     slug: "la-apparel",
-    number: "06",
+    number: "07",
     title: ["LA Apparel", "Campaign."],
     contentsName: "LA Apparel Campaign",
     category: "Brand Marketing",
@@ -629,9 +650,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 7,
+    id: 8,
     slug: "creative-journey",
-    number: "07",
+    number: "08",
     title: ["The Creative", "Journey."],
     contentsName: "The Creative Journey",
     category: "Content Creation",
@@ -683,9 +704,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 8,
+    id: 9,
     slug: "artist-marketing",
-    number: "08",
+    number: "09",
     title: ["Artist", "Marketing."],
     contentsName: "Artist Marketing Campaign",
     category: "Campaign Development",

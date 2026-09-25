@@ -9,6 +9,7 @@ import { LaApparelContent } from "./LaApparelContent";
 import { CreativeJourneyContent } from "./CreativeJourneyContent";
 import { KwlStudioContent } from "./KwlStudioContent";
 import { SpotifySamplesContent } from "./SpotifySamplesContent";
+import { SpotifyMapContent } from "./SpotifyMapContent";
 
 interface ProjectSectionProps {
   project: Project;
@@ -82,6 +83,25 @@ export function ProjectSection({ project, nextHref }: ProjectSectionProps) {
             </div>
           </dl>
         </div>
+
+        {project.liveUrl && (
+          <div className="reveal mt-10 flex flex-wrap gap-x-8 gap-y-3">
+            <a
+              href="#spotify-map-study"
+              className="label-accent text-[var(--color-dark)] no-underline transition-colors hover:text-[var(--color-tan)]"
+            >
+              View Case Study →
+            </a>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="label-accent text-[var(--color-dark)] no-underline transition-colors hover:text-[var(--color-tan)]"
+            >
+              Live Demo →
+            </a>
+          </div>
+        )}
       </div>
 
       <div
@@ -103,6 +123,10 @@ export function ProjectSection({ project, nextHref }: ProjectSectionProps) {
           <KwlStudioContent project={project} />
         ) : project.layout === "spotify-samples" ? (
           <SpotifySamplesContent />
+        ) : project.layout === "spotify-map" ? (
+          <div className="px-6 md:px-10 lg:px-16">
+            <SpotifyMapContent />
+          </div>
         ) : (
           <div className="px-6 md:px-10 lg:px-16">
             {project.stats && <StatsCallouts stats={project.stats} />}
