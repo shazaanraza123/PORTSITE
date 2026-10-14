@@ -10,6 +10,7 @@ import { CreativeJourneyContent } from "./CreativeJourneyContent";
 import { KwlStudioContent } from "./KwlStudioContent";
 import { SpotifySamplesContent } from "./SpotifySamplesContent";
 import { SpotifyMapContent } from "./SpotifyMapContent";
+import { InstagramMoodboardContent } from "./InstagramMoodboardContent";
 
 interface ProjectSectionProps {
   project: Project;
@@ -105,7 +106,7 @@ export function ProjectSection({ project, nextHref }: ProjectSectionProps) {
       </div>
 
       <div
-        className={`${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" || project.layout === "kwl-studio" || project.layout === "spotify-samples" ? "" : "reveal bg-[var(--color-cream)]"} ${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" || project.layout === "kwl-studio" || project.layout === "spotify-samples" ? "pb-0" : "pb-16 lg:pb-24"}`}
+        className={`${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" || project.layout === "spotify-samples" || project.layout === "kwl-studio" ? "" : "reveal bg-[var(--color-cream)]"} ${project.layout === "kwl-studio" ? "bg-[var(--color-cream)]" : ""} ${project.layout === "artist-marketing" || project.layout === "tour-campaign" || project.layout === "yeezy-marketing" || project.layout === "mobile-showcase" || project.layout === "la-apparel" || project.layout === "creative-journey" || project.layout === "spotify-samples" ? "pb-0" : "pb-16 lg:pb-24"}`}
       >
         {project.layout === "artist-marketing" ? (
           <div className="px-6 md:px-10 lg:px-16">
@@ -120,12 +121,18 @@ export function ProjectSection({ project, nextHref }: ProjectSectionProps) {
         ) : project.layout === "creative-journey" ? (
           <CreativeJourneyContent project={project} />
         ) : project.layout === "kwl-studio" ? (
-          <KwlStudioContent project={project} />
+          <div className="px-6 md:px-10 lg:px-16">
+            <KwlStudioContent />
+          </div>
         ) : project.layout === "spotify-samples" ? (
           <SpotifySamplesContent />
         ) : project.layout === "spotify-map" ? (
           <div className="px-6 md:px-10 lg:px-16">
             <SpotifyMapContent />
+          </div>
+        ) : project.layout === "instagram-moodboard" ? (
+          <div className="px-6 md:px-10 lg:px-16">
+            <InstagramMoodboardContent />
           </div>
         ) : (
           <div className="px-6 md:px-10 lg:px-16">

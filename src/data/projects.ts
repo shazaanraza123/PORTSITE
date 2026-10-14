@@ -14,7 +14,8 @@ export type ProjectLayout =
   | "creative-journey"
   | "kwl-studio"
   | "spotify-samples"
-  | "spotify-map";
+  | "spotify-map"
+  | "instagram-moodboard";
 
 export interface ProjectImage {
   src: string;
@@ -151,8 +152,42 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    slug: "yzy-mobile",
+    slug: "instagram-moodboard",
     number: "01",
+    title: ["Instagram", "Moodboard."],
+    contentsName: "Instagram Moodboard",
+    contentsCategory: "Product Design",
+    category: "Product Design · Frontend Development",
+    year: "2026",
+    role: "Product Designer & Frontend Developer",
+    tools: "React · TypeScript · Vite · Zustand",
+    context: "Independent product concept",
+    overview:
+      "Instagram's Saved tab is where inspiration gets lost. Moodboard turns Saved into a workspace for finding more of what you like, and for making something of your own.",
+    images: [],
+    layout: "instagram-moodboard",
+  },
+  {
+    id: 2,
+    slug: "kwl-studio",
+    number: "02",
+    title: ["KWL", "Studio."],
+    contentsName: "KWL Studio",
+    contentsCategory: "Brand",
+    category: "Brand · Web",
+    year: "2026",
+    role: "Founder, product and brand designer, web build",
+    tools: "Next.js · Netlify",
+    context: "Pre-launch",
+    overview:
+      "A drop-only streetwear accessories brand from Chicago. One run per product, no restocks.",
+    images: [],
+    layout: "kwl-studio",
+  },
+  {
+    id: 3,
+    slug: "yzy-mobile",
+    number: "03",
     title: ["YZY Mobile", "App Prototype."],
     category: "Product Design",
     year: "2024",
@@ -190,9 +225,9 @@ export const projects: Project[] = [
     layout: "mobile-showcase",
   },
   {
-    id: 2,
+    id: 4,
     slug: "spotify-samples",
-    number: "02",
+    number: "04",
     title: ["Spotify", "Samples."],
     contentsName: "Spotify Samples",
     contentsCategory: "Product Design",
@@ -207,9 +242,9 @@ export const projects: Project[] = [
     layout: "spotify-samples",
   },
   {
-    id: 3,
+    id: 5,
     slug: "spotify-map",
-    number: "03",
+    number: "05",
     title: ["Spotify", "Map."],
     contentsName: "Spotify Map",
     contentsCategory: "Product Design",
@@ -226,43 +261,9 @@ export const projects: Project[] = [
       "https://spotify-samples-8gia-e0j3hj9id-shazaanraza123s-projects.vercel.app/",
   },
   {
-    id: 4,
-    slug: "kwl-studio",
-    number: "04",
-    title: ["KWL", "Studio."],
-    category: "Brand Identity",
-    year: "2023",
-    role: "Creative Director & Designer",
-    tools: "Figma · Adobe Illustrator · Photoshop · Shopify",
-    context: "Self-directed streetwear label",
-    overview:
-      "Full brand build for KWL Studio, a Chicago streetwear label. Logo, merch graphics, lookbook, and Shopify store from scratch.",
-    images: [],
-    layout: "kwl-studio",
-    kwlStudioMedia: {
-      stock: {
-        src: "/projects/kwl-studio/stock.png",
-        alt: "KWL Studio apparel stock imagery",
-      },
-      storefront: {
-        src: "/projects/kwl-studio/storefront.png",
-        alt: "KWL Studio Shopify storefront",
-      },
-      brand: {
-        src: "/projects/kwl-studio/brand.png",
-        alt: "KWL Studio logo system on black",
-      },
-      reel: {
-        src: "/projects/kwl-studio/star-reel.mp4",
-        alt: "KWL Studio brand reel",
-        aspect: "16/9",
-      },
-    },
-  },
-  {
-    id: 5,
+    id: 6,
     slug: "ye-tour",
-    number: "05",
+    number: "06",
     title: ["Ye Tour", "Media Campaign."],
     contentsName: "Ye Tour Media Campaign",
     category: "Campaign Strategy",
@@ -470,9 +471,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 6,
+    id: 7,
     slug: "yeezy-marketing",
-    number: "06",
+    number: "07",
     title: ["Yeezy Marketing", "Campaign."],
     contentsName: "Yeezy Marketing Campaign",
     category: "Brand Marketing",
@@ -608,9 +609,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 7,
+    id: 8,
     slug: "la-apparel",
-    number: "07",
+    number: "08",
     title: ["LA Apparel", "Campaign."],
     contentsName: "LA Apparel Campaign",
     category: "Brand Marketing",
@@ -650,9 +651,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 8,
+    id: 9,
     slug: "creative-journey",
-    number: "08",
+    number: "09",
     title: ["The Creative", "Journey."],
     contentsName: "The Creative Journey",
     category: "Content Creation",
@@ -704,9 +705,9 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 9,
+    id: 10,
     slug: "artist-marketing",
-    number: "09",
+    number: "10",
     title: ["Artist", "Marketing."],
     contentsName: "Artist Marketing Campaign",
     category: "Campaign Development",
