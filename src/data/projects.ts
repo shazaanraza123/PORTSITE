@@ -173,10 +173,10 @@ export const projects: Project[] = [
     number: "02",
     title: ["KWL", "Studio."],
     contentsName: "KWL Studio",
-    contentsCategory: "Brand",
-    category: "Brand · Web",
+    contentsCategory: "Web",
+    category: "Product Design · Web",
     year: "2026",
-    role: "Founder, product and brand designer, web build",
+    role: "Product design and web build",
     tools: "Next.js · Netlify",
     context: "Pre-launch",
     overview:
