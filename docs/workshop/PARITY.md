@@ -37,3 +37,11 @@ Source of truth: `docs/workshop/reference/the-workshop-collection-study.html` (t
 - The board fits by height as well as width (`scale = min(W/1360, H/860, 1.2)`), and the desk is reserved in screen pixels. Nothing slides under the desk at 1280x720 any more (the Rolling Stone clipping did).
 - "fan page" caption fits its print. On phones the pile starts lower so the pinned nav doesn't cover it.
 - Known, left for step 3: the nav tapes cover two of the headings at the top right.
+
+# Step 3: less navigation and instruction clutter (separate commit)
+- Pinned tapes: 5 → 3 (Index, About, Contact). Resume moved into the Contact card, the About note and the Index (new "Me" group: About, Resume, Contact). Sound moved into the record's own controls (Sound on/off, `aria-pressed`). It only ever affected the record and drop thumps; the chopper pads play on press as before.
+- On the wall the tapes sit on the desk edge to the left of the drawer (desktop), so they no longer cover the pinned work or the headings. The drawer centers in the space between the tapes and the turn tape. Phones: tapes bottom-left on the bench, top on the wall.
+- The turn tape reads "the wall ↑" / "↓ the bench" (its `aria-label` is still a full sentence). The bench/wall rail lost its words and got slimmer. The first-touch hint is quieter.
+- The wall's "on the bench" links show on hover or keyboard focus for mouse users (and while an item is highlighted). They stay always visible on touch screens. Every link is still a focusable button in the DOM.
+- Measured: nothing on the wall sits under the tapes at 1440x880, 1024x768 or 390x844. Visible bench-links at rest on desktop: 7 → 2 (the two inside content).
+- Also fixed: the pinned refs list ran past its card (it did in the approved prototype too).

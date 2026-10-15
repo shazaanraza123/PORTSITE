@@ -300,3 +300,35 @@ button{font:inherit;color:inherit}
 
 /* step 2: pencilled group headings on the wall */
 .wlabel{position:absolute;font-family:var(--f-hand);font-size:26px;line-height:1;color:#6c6457;white-space:nowrap;pointer-events:none;padding-bottom:4px;background:linear-gradient(transparent calc(100% - 2px),rgba(108,100,87,.45) 0) no-repeat 0 100%/100% 2px}
+
+/* step 3: quieter navigation and instructions */
+.top-nav{gap:6px}
+.top-nav .dymo{font-size:11px;padding:6px 10px 5px;min-height:32px}
+.meter{gap:0;opacity:.55}
+.meter .bar{height:84px;width:1.5px}
+.meter .bar::after{width:7px;height:7px;margin:-3.5px 0 0 -3.5px}
+.first-hint{font-size:21px;color:rgba(27,26,24,.55)}
+.turn{font-size:11px!important;padding:7px 11px 6px}
+/* on the wall the label-maker tapes sit on the desk edge, left of the drawer, instead of over the pinned work */
+@media (min-width:700px){
+  .room-vp.on-wall .top-nav{top:auto;bottom:calc(40px + env(safe-area-inset-bottom, 0px));left:max(18px, env(safe-area-inset-left, 0px));right:auto;justify-content:flex-start}
+  .room-vp.on-wall .index,.room-vp.on-wall .contact-card{top:auto;bottom:calc(86px + env(safe-area-inset-bottom, 0px));left:max(18px, env(safe-area-inset-left, 0px));right:auto}
+  .drawer{left:280px;right:220px;width:auto;max-width:560px;margin:0 auto;transform:none}
+}
+/* sketch-to-bench links: show on hover or keyboard focus for mouse users, always visible on touch */
+@media (hover:hover) and (pointer:fine){
+  .it .tobench{opacity:0;transition:opacity .18s}
+  .it:hover .tobench,.it:focus-within .tobench,.it.glow .tobench{opacity:1}
+  .noteback .tobench,.row .tobench{opacity:1}
+}
+@media (max-width:700px){
+  /* phones: tapes at the bottom-left of the bench (clear of the name), back at the top on the wall */
+  .top-nav{top:auto;bottom:calc(18px + env(safe-area-inset-bottom, 0px));right:auto}
+  .index,.contact-card{top:auto;bottom:calc(64px + env(safe-area-inset-bottom, 0px));max-height:calc(100% - 150px)}
+  .room-vp.on-wall .top-nav{top:calc(18px + env(safe-area-inset-top, 0px));bottom:auto}
+  .room-vp.on-wall .index,.room-vp.on-wall .contact-card{top:calc(62px + env(safe-area-inset-top, 0px));bottom:auto}
+  .first-hint{bottom:calc(70px + env(safe-area-inset-bottom, 0px))}
+  .room-vp.on-wall .turn{bottom:calc(108px + env(safe-area-inset-bottom, 0px))}
+  .drawer .count{display:none}
+}
+.refs ul{margin-top:4px;line-height:1.35}

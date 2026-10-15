@@ -41,17 +41,18 @@ function renderIndex(q) { const body = $("index-body"); body.innerHTML = ""; q =
     const b = document.createElement("button"); b.type = "button"; b.className = "irow"; b.innerHTML = "<b></b><span></span><small></small>"; b.children[0].textContent = r.n; b.children[1].textContent = r.s; b.children[2].textContent = r.d;
     b.addEventListener("click", () => { closePanels(); r.go(); }); body.appendChild(b); });
   if (!body.children.length) body.innerHTML = '<h4>Nothing matches.</h4>'; }
+rows.push({ g: "Me", n: "About", s: "wall", d: "the folded note", go: () => room.goWall(() => wall.openAbout()) });
+rows.push({ g: "Me", n: "Resume", s: "pdf", d: "opens in a new tab", go: () => window.open(LINKS.resume, "_blank", "noopener") });
+rows.push({ g: "Me", n: "Contact", s: "email", d: LINKS.email, go: () => { $("contact-card").hidden = false; $("n-contact").setAttribute("aria-expanded", "true"); } });
 renderIndex("");
 $("index-q").addEventListener("input", e => renderIndex(e.target.value), L);
 $("index-q").addEventListener("keydown", e => e.stopPropagation(), L);
 $("n-index").addEventListener("click", () => { const open = $("index").hidden; closePanels(); $("index").hidden = !open; $("n-index").setAttribute("aria-expanded", open); if (open) setTimeout(() => $("index-q").focus({ preventScroll: true }), 30); }, L);
 $("n-contact").addEventListener("click", () => { const open = $("contact-card").hidden; closePanels(); $("contact-card").hidden = !open; $("n-contact").setAttribute("aria-expanded", open); }, L);
-$("contact-email").textContent = LINKS.email; $("contact-resume").href = LINKS.resume; $("n-resume").href = LINKS.resume;
+$("contact-email").textContent = LINKS.email; $("contact-resume").href = LINKS.resume;
 $("n-about").addEventListener("click", () => { closePanels(); room.goWall(() => wall.openAbout()); }, L);
 const onEsc = e => { if (e.key === "Escape") closePanels(); }; window.addEventListener("keydown", onEsc, L);
 vp.addEventListener("pointerdown", e => { if (!e.target.closest(".index,.contact-card,.top-nav")) closePanels(); }, L);
-const snd = $("n-sound"); let soundOn = false;
-snd.addEventListener("click", () => { soundOn = !soundOn; snd.setAttribute("aria-pressed", soundOn); snd.textContent = soundOn ? "Sound on" : "Sound off"; if (soundOn) Snd.ctx(); bench.setSound(soundOn); }, L);
 const api = { bench, wall, room, destroy() { lifetime.abort(); room.destroy(); wall.destroy(); bench.destroy(); } };
 root.__workshop = api; // handle for tests and debugging
 return api;

@@ -56,17 +56,15 @@ export default function WorkshopRoom() {
           <nav className="top-nav" aria-label="Site">
             <button className="dymo" id="n-index" aria-expanded="false">Index</button>
             <button className="dymo" id="n-about">About</button>
-            <a className="dymo" id="n-resume" href="#" target="_blank" rel="noopener">Resume</a>
             <button className="dymo" id="n-contact" aria-expanded="false">Contact</button>
-            <button className="dymo" id="n-sound" aria-pressed="false">Sound off</button>
           </nav>
           <div className="index" id="index" hidden role="dialog" aria-label="Project index">
             <div className="ihead"><b>Everything, plainly</b><label htmlFor="index-q" style={{ position: "absolute", left: -9999 }}>Search projects</label><input id="index-q" type="search" placeholder="search projects" autoComplete="off" /></div>
             <div className="ibody" id="index-body" />
           </div>
           <div className="contact-card" id="contact-card" hidden><b>say hi</b><span className="em" id="contact-email" /><a id="contact-resume" href="#" target="_blank" rel="noopener">resume &#8599;</a></div>
-          <div className="meter" id="meter" aria-hidden="true"><span>bench</span><div className="bar" /><span>wall</span></div>
-          <button className="dymo turn" id="turn" aria-label="Look up at the wall">look up at the wall</button>
+          <div className="meter" id="meter" aria-hidden="true"><div className="bar" /></div>
+          <button className="dymo turn" id="turn" aria-label="Look up at the wall">the wall &#8593;</button>
         </div>
       </section>
     </div>

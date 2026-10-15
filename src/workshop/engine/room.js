@@ -24,7 +24,7 @@ export function createRoom(opts) {
     wallLayer.setAttribute('aria-hidden', wf > .5 ? 'false' : 'true');
     benchUI.forEach(el => { el.style.opacity = (1 - smooth(.08, .3, p)).toFixed(3); el.style.pointerEvents = p < .2 ? 'auto' : 'none'; });
     const nowWall = p > .6;
-    if (nowWall !== onWall) { onWall = nowWall; toggle.textContent = onWall ? 'back to the bench' : 'look up at the wall'; toggle.setAttribute('aria-label', onWall ? 'Go back to the bench' : 'Look up at the wall'); }
+    if (nowWall !== onWall) { onWall = nowWall; toggle.innerHTML = onWall ? '&#8595; the bench' : 'the wall &#8593;'; wallLayer.parentElement.classList.toggle('on-wall', onWall); toggle.setAttribute('aria-label', onWall ? 'Go back to the bench' : 'Look up at the wall'); }
     if (meter) meter.style.setProperty('--p', p.toFixed(3));
     // stop rendering the 3D scene once the wall fully covers it
     if (wf > .995) bench.stop(); else bench.start();
