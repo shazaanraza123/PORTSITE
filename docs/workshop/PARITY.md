@@ -30,3 +30,10 @@ Source of truth: `docs/workshop/reference/the-workshop-collection-study.html` (t
 - **Phone:** rounded-rect slab (r .12) with bevel, glass front, metal band, side buttons, faint glass sheen over the screen.
 - **YE ARCHIVE catalog:** brass label frame and a brass drawer pull.
 - Engine: optional per-item `inspectEuler` and a local flip quaternion. Nothing else changed.
+
+# Step 2: wall composition (separate commit)
+- Cleared the pile-up at center-right. The cardboard star (now 100px) rests on the end of its own belt drawing. The chopper moved down 30, the contact sheet down 10, and the campaign prints spread right. Overlaps over 12% between unrelated items: 3 → 0 at 1440x880 and 1280x720 (measured).
+- Pencilled headings over the three right-hand groups ("where ideas start", "making it real", "out in the world"). Real headings (`role=heading`, level 2) for screen readers, hidden on phones where the pile reads in order.
+- The board fits by height as well as width (`scale = min(W/1360, H/860, 1.2)`), and the desk is reserved in screen pixels. Nothing slides under the desk at 1280x720 any more (the Rolling Stone clipping did).
+- "fan page" caption fits its print. On phones the pile starts lower so the pinned nav doesn't cover it.
+- Known, left for step 3: the nav tapes cover two of the headings at the top right.
