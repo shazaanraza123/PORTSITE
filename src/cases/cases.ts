@@ -265,14 +265,14 @@ const cjP = P["creative-journey"];
 const cj = cjP?.creativeJourneyMedia;
 const journey: Case = {
   slug: "creative-journey", n: "The Creative Journey", kicker: "From the wall",
-  line: "Fan pages, built in public.",
+  line: "Independent music media and community.",
   meta: { role: cjP?.role ?? "", year: cjP?.year ?? "", status: "Ongoing", tools: (cjP?.tools ?? "").replace(/ · /g, ", ") },
   links: [], thinking: "profile", sources: "Existing site copy, stats and screenshots.",
   hero: img("creative-journey/rolling-stone-feature", cj?.press.alt ?? "Rolling Stone feature", cj ? `${cj.press.outlet}, ${cj.press.date}: “${cj.press.headline}”` : undefined, "print"),
   sections: [
     { kind: "text", h: "What it is", body: [cjP?.overview ?? ""] },
     { kind: "stats", h: "Numbers", items: cjP?.stats ?? [], note: "As stated on shazport." },
-    { kind: "gallery", h: "The pages", layout: "phones", items: [
+    { kind: "gallery", h: "The community", layout: "phones", items: [
       ...(cj?.socials ?? []).map(s => img(fromProjects(s.src), s.alt, `${s.handle}: ${s.highlight}`, "phone")),
       ...(cj ? [img(fromProjects(cj.hashtag.src), cj.hashtag.alt, `${cj.hashtag.tag}: ${cj.hashtag.posts} posts`, "phone")] : [])] }
   ]

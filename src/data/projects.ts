@@ -278,9 +278,9 @@ export const projects: Project[] = [
     tourStops: [
       {
         city: "Istanbul, Türkiye",
-        descriptor: "RECORD BREAKING STADIUM · LARGEST SHOW OF ALL TIME",
+        descriptor: "ATATÜRK OLYMPIC STADIUM · REPORTED ATTENDANCE ABOUT 118,000",
         campaign:
-          "Led media for the Istanbul show, the biggest stadium performance on the tour. Promos, fan page pushes, and on site content all week.",
+          "Helped lead the team behind the Istanbul concert campaign. Reported attendance about 118,000.",
         featured: true,
         videos: [
           {
@@ -305,7 +305,7 @@ export const projects: Project[] = [
         images: [
           {
             src: "/projects/ye-tour/turkey-stadium.jpeg",
-            alt: "Istanbul stadium performance, record breaking show",
+            alt: "Istanbul stadium performance at Atatürk Olympic Stadium",
             placeholder: "[Image: Istanbul stadium]",
             aspect: "4/3",
           },
@@ -363,9 +363,9 @@ export const projects: Project[] = [
       },
       {
         city: "Chicago, IL",
-        descriptor: "SOLDIER FIELD · MIDWEST STOP",
+        descriptor: "SOLDIER FIELD · TWO NIGHTS",
         campaign:
-          "Promo visuals for Soldier Field. Coordinated fan page posts on Instagram and TikTok and supported media production during show week.",
+          "A two-night social campaign for Soldier Field. The posts from those nights were counted at over 30 million views.",
         images: [
           {
             src: "/projects/ye-tour/chicago-promo.png",
@@ -659,9 +659,9 @@ export const projects: Project[] = [
     year: "2022 to Present",
     role: "Creator, Designer, Strategist",
     tools: "CapCut · Premiere · Photoshop · Figma · Instagram · TikTok",
-    context: "Personal brand, @Yelova911 and @kanyewestlover911",
+    context: "Independent music media, @kanyewestlover911 and @yelova911",
     overview:
-      "Three years building in public. Grew @Yelova911 and @kanyewestlover911 into pages with millions of followers, got featured in Rolling Stone, ran content for KWL Studio, and made short form edits that actually hit. Every post was just me figuring out what works at scale.",
+      "KanyeWestLover911 was independent music media and an online community around music, fashion, and culture. The work was content strategy, creative direction, audience development, and building that community. @kanyewestlover911 reached 1.8 million on TikTok. @yelova911 reached 427,000 on Instagram, and a second Instagram account reached about 200,000. Rolling Stone wrote about it in 2022.",
     stats: [
       { value: "3M+", label: "Combined reach across platforms" },
       { value: "20 to 30M+", label: "Views per Ye tour show" },

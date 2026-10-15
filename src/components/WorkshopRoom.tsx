@@ -24,7 +24,7 @@ export default function WorkshopRoom() {
           <div className="gl" id="bench-gl" />
 
           {/* BENCH UI (fades on the wall) */}
-          <div className="a-name bench-ui"><span className="dymo">Shazaan Raza</span><span className="typed">product design / creative technology / front-end</span></div>
+          <div className="a-name bench-ui"><span className="dymo">Shazaan Raza</span><span className="typed">product designer / full-stack developer / creative technologist</span></div>
           <div className="hover-name" id="hover-name" hidden />
           <div className="first-hint bench-ui" id="first-hint">pick something up</div>
           <div className="tag" id="a-tag" hidden role="dialog" aria-live="polite" aria-labelledby="a-tag-h">
@@ -62,7 +62,7 @@ export default function WorkshopRoom() {
             <div className="ihead"><b>Everything, plainly</b><label htmlFor="index-q" style={{ position: "absolute", left: -9999 }}>Search projects</label><input id="index-q" type="search" placeholder="search projects" autoComplete="off" /></div>
             <div className="ibody" id="index-body" />
           </div>
-          <div className="contact-card" id="contact-card" hidden><b>say hi</b><span className="em" id="contact-email" /><a id="contact-resume" href="#" target="_blank" rel="noopener">resume &#8599;</a></div>
+          <div className="contact-card" id="contact-card" hidden><b>say hi</b><a className="em" id="contact-email" /><a id="contact-resume" href="#" target="_blank" rel="noopener noreferrer">resume &#8599;</a></div>
           <div className="meter" id="meter" aria-hidden="true"><div className="bar" /></div>
           <button className="dymo turn" id="turn" aria-label="Look up at the wall">the wall &#8593;</button>
         </div>

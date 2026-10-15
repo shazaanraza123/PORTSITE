@@ -65,8 +65,8 @@ const fill = new T.DirectionalLight(0xdfe6ff, .28); fill.position.set(6, 4, 6); 
   { img: 'ig-similar', x: -1.05, y: 3.35, w: .55, h: 1.15, r: -.05, frame: true },
   { img: 'wallet-drawn', x: .55, y: 4.25, w: 1.0, h: .74, r: .03, frame: true },
   { img: 'belt-black', x: .45, y: 3.15, w: 1.15, h: .44, r: -.03, frame: true },
-  { img: 'tampa', x: 3.0, y: 4.1, w: .66, h: .88, r: -.07, frame: true },
-  { img: 'arnhem', x: 4.1, y: 3.95, w: .6, h: .8, r: .09, frame: true },
+  { img: 'turkey', x: 3.0, y: 4.1, w: .66, h: .88, r: -.07, frame: true },
+  { img: 'chicago', x: 4.1, y: 3.95, w: .6, h: .8, r: .09, frame: true },
   { img: 'chicago', x: 3.2, y: 2.75, w: 1.3, h: .62, r: -.01, frame: true },
   { img: 'rs', x: 2.9, y: 1.55, w: .62, h: .74, r: .05, frame: true },
   { img: 'yz-listen', x: 4.15, y: 1.55, w: .48, h: .82, r: -.04, frame: true },
@@ -243,14 +243,22 @@ haze.castShadow = false; let lightsOn = false, lightsV = 0;
 /* ---------- not projects: swatches, paperweight + hidden note, card, pencil ---------- */
 const swDefs = [{ n: 'Cast concrete', d: 'The bench, the dome, the floor.', m: new T.MeshStandardMaterial({ map: concreteTex, roughness: .95 }) }, { n: 'Matte rubber', d: 'Sole material test. No shine, ever.', m: mat('#1f1e1c', 1) }, { n: 'Quilted caviar leather', d: 'Star Belt 001 sample.', m: new T.MeshStandardMaterial({ color: '#8a1a1a', map: quiltTex, roughness: .6 }) }];
 swDefs.forEach((d, i) => { const g = new T.Group(); const b = new T.Mesh(new T.BoxGeometry(.52, .06, .52), d.m); b.position.y = .03; g.add(b); g.position.set(-3.95 + i * .04, 0, -1.85 + i * .03); g.rotation.y = i * .35 - .2; reg(g, { id: 'sw' + i, weight: .7, stackY: i * .06, sw: d }); });
-const noteTex = ctex(512, 350, (x, w, h) => { x.fillStyle = '#F6F1E4'; x.fillRect(0, 0, w, h); x.strokeStyle = 'rgba(0,0,0,.08)'; x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2, h); x.stroke(); hand(x, 'you moved the heavy thing.\nmost people don’t.\ni keep the good stuff\nunder heavy things. - s', 28, 70, 40, '#2f2b26', -.03); });
+const NOTE_LINES = ['Anyone can learn', 'the tools.', 'Taste is harder', 'to teach.', '', 'I understand culture,', 'what moves people,', 'and how ideas become', 'something bigger.', 'I design, I code,', 'I build audiences,', 'and I bring things', 'to life.', '', 'The future belongs', 'to people who can', 'connect all of it.'];
+const noteTex = ctex(768, 525, (x, w, h) => {
+  x.fillStyle = '#F6F1E4'; x.fillRect(0, 0, w, h);
+  x.strokeStyle = 'rgba(0,0,0,.08)'; x.beginPath(); x.moveTo(w / 2, 0); x.lineTo(w / 2, h); x.stroke();
+  let size = 34; const padX = 40, padY = 34;
+  const fit = () => { x.font = `600 ${size}px Caveat, "Comic Sans MS", cursive`; const max = Math.max(...NOTE_LINES.map(l => x.measureText(l).width || 0)); const lh = size * 1.14; return { max, lh, total: lh * NOTE_LINES.length }; };
+  let m = fit(); while ((m.max > w - padX * 2 || m.total > h - padY * 2) && size > 18) { size -= 1; m = fit(); }
+  x.save(); x.translate(padX, padY + size); x.rotate(-0.02); x.fillStyle = '#2f2b26'; NOTE_LINES.forEach((l, i) => x.fillText(l, 0, i * m.lh)); x.restore();
+});
 const noteG = new T.Group(); const nm = new T.Mesh(new T.PlaneGeometry(.66, .45), new T.MeshStandardMaterial({ map: noteTex, roughness: .95 })); nm.rotation.x = -Math.PI / 2; nm.position.y = .002; noteG.add(nm);
 noteG.position.set(-1.05, 0, 2.05); noteG.rotation.y = .25;
 reg(noteG, { id: 'note', weight: .5, inspectScale: 1.6 });
 const stoneG = new T.Group(); const stoneM = new T.Mesh(new T.DodecahedronGeometry(.36, 1), new T.MeshStandardMaterial({ color: '#8c8478', roughness: .98, flatShading: true, map: concreteTex })); stoneM.scale.set(1, .6, 1.1); stoneM.position.y = .2; stoneG.add(stoneM);
 stoneG.position.set(-1.0, 0, 2.05);
 reg(stoneG, { id: 'stone', weight: 3.2, liftH: .45, flat: false });
-const cardTex = ctex(700, 400, (x) => { x.fillStyle = '#F4F0E6'; x.fillRect(0, 0, 700, 400); x.fillStyle = '#1B1A18'; x.font = '700 44px "JetBrains Mono", monospace'; x.fillText('SHAZAAN RAZA', 40, 90); x.font = '400 22px "JetBrains Mono", monospace'; x.fillText('product design', 40, 170); x.fillText('creative technology', 40, 204); x.fillText('front-end development', 40, 238); x.fillStyle = '#4D4943'; x.fillText('chicago, il', 40, 350); x.fillStyle = '#C2410C'; x.fillRect(612, 330, 28, 28); });
+const cardTex = ctex(700, 400, (x) => { x.fillStyle = '#F4F0E6'; x.fillRect(0, 0, 700, 400); x.fillStyle = '#1B1A18'; x.font = '700 44px "JetBrains Mono", monospace'; x.fillText('SHAZAAN RAZA', 40, 90); x.font = '400 22px "JetBrains Mono", monospace'; x.fillText('product designer', 40, 170); x.fillText('full-stack developer', 40, 204); x.fillText('creative technologist', 40, 238); x.fillStyle = '#4D4943'; x.fillText('chicago, il', 40, 350); x.fillStyle = '#C2410C'; x.fillRect(612, 330, 28, 28); });
 const cardG = new T.Group(); const cm = new T.Mesh(new T.BoxGeometry(1.05, .014, .6), [mat('#eee', .9), mat('#eee', .9), new T.MeshStandardMaterial({ map: cardTex, roughness: .9 }), mat('#e9e4da', .9), mat('#eee', .9), mat('#eee', .9)]); cm.position.y = .007; cardG.add(cm);
 cardG.position.set(4.25, 0, 2.15); cardG.rotation.y = .18;
 reg(cardG, { id: 'card', weight: .5, inspectScale: 1.7 });
@@ -310,8 +318,8 @@ function describe(it) {
   if (pr) { const n = ORDER.indexOf(it.proj) + 1; const vp = el('a', 'ext', 'View project <span aria-hidden="true">&#8594;</span>'); vp.href = caseStudy(pr.slug); const acts = [vp]; if (pr.live) acts.push(ext('Live', pr.live)); if (pr.code) acts.push(ext('Code', pr.code));
     acts.push(btn('See the thinking <span aria-hidden="true">&#8593;</span>', () => { const w = it.wall || pr.wall; release(); onThinking(w); }, 'thinking'));
     return openTag({ k: 'OBJECT / 00' + n, h: pr.n, obj: it.objLabel || pr.obj, meta: pr.meta, line: pr.line, plates: it.plates || pr.plates, portrait: it.plates ? false : pr.portrait, ctl: controls(it), acts }); }
-  if (it.id === 'card') return openTag({ k: 'who made all this', h: 'Shazaan Raza', meta: 'Product design / creative technology / front-end', line: 'The finished work is on this bench. How I think is on the wall behind it.', acts: [btn('Look at the wall <span aria-hidden="true">&#8593;</span>', () => { release(); onAbout(); }, 'thinking'), ext('Resume', links.resume)] });
-  if (it.id === 'note') return openTag({ k: 'found under the stone', h: 'A note', line: '“you moved the heavy thing. most people don’t. i keep the good stuff under heavy things.”' });
+  if (it.id === 'card') return openTag({ k: 'who made all this', h: 'Shazaan Raza', meta: 'Product designer / full-stack developer / creative technologist', line: 'The finished work is on this bench. How I think is on the wall behind it.', acts: [btn('Look at the wall <span aria-hidden="true">&#8593;</span>', () => { release(); onAbout(); }, 'thinking'), ext('Resume', links.resume)] });
+  if (it.id === 'note') return openTag({ k: 'found under the stone', h: 'A note', line: 'Anyone can learn the tools. Taste is harder to teach.\n\nI understand culture, what moves people, and how ideas become something bigger. I design, I code, I build audiences, and I bring things to life.\n\nThe future belongs to people who can connect all of it.' });
   if (it.sw) return openTag({ k: 'material swatch', h: it.sw.n, line: it.sw.d });
 }
 api.showContact = () => openTag({ k: 'contact', h: 'Say hi', line: links.email, acts: [ext('Resume', links.resume)] });

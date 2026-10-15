@@ -40,8 +40,7 @@ export function Contact() {
               <span className="block font-bold italic">WORK.</span>
             </h2>
             <p className="mt-8 max-w-md font-body text-sm font-light leading-relaxed md:text-base">
-              Open to product design roles, frontend positions, and select
-              freelance projects.
+              Open to product design, full-stack, and creative technology work.
             </p>
           </div>
 

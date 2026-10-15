@@ -3,8 +3,8 @@
 const GH = "https://github.com/shazaanraza123/";
 
 export const LINKS = {
-  resume: "https://shazport.netlify.app",   // [replace with the real resume PDF]
-  email: "[your email]",                    // [replace]
+  resume: "/resume/shazaan-raza.pdf",
+  email: "shazaanraza123@gmail.com",
   caseStudyBase: "/work"
 };
 
@@ -28,8 +28,8 @@ export const FEATURED = {
     line: "A connected archive of Ye's documented work: 28,083 records, 13,956 local images.",
     slug: "ye-archive", code: GH + "ye-archive", wall: "rs", bench: "catalog", plates: ["ye-entry", "ye-archive", "ye-era", "ye-search"] },
   tour: { n: "Ye Tour Media", obj: "Stage model", meta: "Tour media + campaigns / 2025 to now / Ongoing",
-    line: "Promos, hype edits and on-the-ground content across SoFi, Mexico City, Istanbul, Arnhem and more.",
-    slug: "ye-tour", wall: "contact", bench: "stage", plates: ["mexico", "tampa", "sofi", "chicago"], portrait: true }
+    line: "Promos, hype edits and on-the-ground content across SoFi, Mexico City, Istanbul, Soldier Field and more.",
+    slug: "ye-tour", wall: "contact", bench: "stage", plates: ["turkey", "chicago", "mexico", "sofi"], portrait: true }
 };
 export const FEATURED_ORDER = ["moodboard", "kwl", "yzy", "samples", "archive", "tour"];
 
@@ -40,17 +40,18 @@ export const WALL_PROJECTS = {
   yeezy: { n: "Yeezy Marketing", meta: "Vultures rollout + Yeezy clothing / 2024", wallId: "yzposter", slug: "yeezy-marketing" },
   la: { n: "LA Apparel", meta: "Visual content + short form / 2023 to 2024", wallId: "laprint", slug: "la-apparel" },
   artists: { n: "Artist Marketing", meta: "@mysp8c, @kinoftw, @oodaredevil / 2025 to now", wallId: "kino", slug: "artist-marketing" },
-  journey: { n: "The Creative Journey", meta: "Fan pages, Rolling Stone feature / 2022 to now", wallId: "profile", slug: "creative-journey" }
+  journey: { n: "The Creative Journey", meta: "Independent music media and community, Rolling Stone feature / 2022 to now", wallId: "profile", slug: "creative-journey" }
 };
 
 // THE DRAWER: everything else, filed by kind. status: built | in progress | needs link
 export const DRAWER = [
   { folder: "Software", items: [
     { n: "Resume Builder", line: "Web app that generates LaTeX resumes through the Overleaf CLSI API.", status: "built", href: GH + "resume-builder" },
-    { n: "Personal Finance Tracker", line: "[add a one-line description]", status: "needs link", href: null },
     { n: "Moodboard (2025)", line: "Shared canvas: upload images, add text, drag, auto-save.", status: "built", href: GH + "moodboard" } ] },
   { folder: "Data + engineering", items: [
-    { n: "Real Estate Price Predictor", line: "[add a one-line description]", status: "needs link", href: null },
+    { n: "Personal Finance Tracker", line: "A personal finance tracker with a login.", status: "built", href: "https://github.com/shazaanraza123/CS425-demo", live: "https://cs425demo.netlify.app/login" },
+    // docs: set a public URL when the CS 484 writeup should be linked. Leave null until then.
+    { n: "Real Estate Price Predictor", line: "A study of property prices from public records, including Milwaukee sales data. Neural nets and local economic signals are the research direction.", status: "in progress", href: null, docs: null },
     { n: "NBA Game Predictor", line: "XGBoost model on historical and live data, served as a web app.", status: "built", href: GH + "NBA-predictor" },
     { n: "Search engine, CS 429", line: "Web crawler, indexer and query processor, end to end.", status: "built", href: GH + "cs429proj" },
     { n: "Options trading bot", line: "Automated options strategies on the Alpaca API with risk limits.", status: "built", href: GH + "alpacabot" } ] },

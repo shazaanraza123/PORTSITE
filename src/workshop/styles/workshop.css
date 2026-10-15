@@ -98,11 +98,13 @@ button{font:inherit;color:inherit}
 .flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.2,1)}
 .flipped .flip{transform:rotateY(180deg)}
 .side{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.side.back{transform:rotateY(180deg);background:var(--c-paper);padding:16px;font-family:var(--f-hand);font-size:22px;line-height:1.15;color:var(--c-pencil)}
-.noteback b{display:block;font-size:26px;margin-bottom:6px}
+.side.back{transform:rotateY(180deg);background:var(--c-paper);padding:12px 12px 10px;font-family:var(--f-hand);font-size:18px;line-height:1.12;color:var(--c-pencil);display:flex;flex-direction:column;box-sizing:border-box}
+.flippable:not(.flipped) .side.back,.flippable.flipped .side.front{pointer-events:none}
+.noteback{display:flex;flex-direction:column;height:100%;min-height:0;overflow-wrap:break-word}
+.noteback b{display:block;font-size:22px;line-height:1.05;margin-bottom:4px}
 .hand{font-family:var(--f-hand)}
 .namecard .strip{background:var(--c-tape);padding:8px 16px 6px;font-family:var(--f-hand);font-size:44px;line-height:1;transform:rotate(-1.5deg);display:inline-block;color:#24211d;box-shadow:0 1px 2px rgba(0,0,0,.08)}
-.namecard .sub{font-family:var(--f-type);font-size:14px;margin-top:10px;margin-left:12px;background:var(--c-paper);display:inline-block;padding:4px 8px;transform:rotate(.8deg)}
+.namecard .sub{font-family:var(--f-type);font-size:13px;line-height:1.35;margin-top:10px;margin-left:12px;background:var(--c-paper);display:inline-block;max-width:calc(100% - 24px);padding:4px 8px;transform:rotate(.8deg)}
 .fold{width:100%;height:100%;position:relative}
 .fold .content{position:absolute;inset:0;padding:22px 22px 18px;background:var(--c-paper);font-family:var(--f-type);font-size:13.5px;line-height:1.5;background-image:repeating-linear-gradient(transparent 0 21px,rgba(60,90,140,.12) 21px 22px)}
 .fold:not(.open) .content{display:none}
@@ -120,8 +122,12 @@ button{font:inherit;color:inherit}
 .idx{background:var(--c-paper);padding:14px 16px;font-family:var(--f-type);font-size:13px;width:100%;height:100%;background-image:linear-gradient(transparent 32px,rgba(179,38,30,.45) 32px 33px,transparent 33px),repeating-linear-gradient(transparent 0 23px,rgba(60,90,140,.14) 23px 24px)}
 .idx h3{margin:0 0 10px;font-family:var(--f-type);font-size:13px;letter-spacing:.2em}
 .idx .ln{margin:0;line-height:24px}
+.idx.how{padding:10px 12px 8px;background-image:linear-gradient(transparent 26px,rgba(179,38,30,.45) 26px 27px,transparent 27px),repeating-linear-gradient(transparent 0 17px,rgba(60,90,140,.14) 17px 18px)}
+.idx.how h3{margin:0 0 2px;font-size:12px;letter-spacing:.14em}
+.idx.how .ln{line-height:17px;font-size:11px;letter-spacing:.01em}
+.idx.how .end{margin:8px 0 0;font-family:var(--f-hand);font-size:20px;line-height:1}
 .refs{background:#F3EEE3;padding:10px 14px;width:100%;height:100%;font-family:var(--f-type);font-size:12.5px}
-.refs ul{margin:6px 0 0;padding-left:16px}
+.refs ul{margin:4px 0 0;padding-left:14px;line-height:1.28}
 .pp{background:#F7F3EA;background-image:radial-gradient(rgba(0,0,0,.05) 1px,transparent 1px);background-size:6px 6px;width:100%;height:100%}
 .clip{background:#fff;width:100%;height:100%;padding:6px}
 .clip img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
@@ -140,7 +146,10 @@ button{font:inherit;color:inherit}
 .sticky textarea{width:100%;height:62px;background:transparent;border:0;border-bottom:1px dashed rgba(0,0,0,.25);font-family:var(--f-hand);font-size:22px;line-height:1.05;resize:none;color:#2a2620;outline:none}
 .sticky textarea:focus-visible{box-shadow:0 2px 0 var(--pop)}
 .sticky button{margin-top:6px;background:#2a2620;color:#EFE3A6;border:0;padding:6px 10px;font-family:var(--f-type);font-size:12px;cursor:pointer;min-height:32px}
-.left-note{background:#EFE3A6;padding:10px 12px;font-family:var(--f-hand);font-size:21px;line-height:1.05;color:#2a2620}
+.left-note{position:relative;background:#EFE3A6;padding:22px 14px 10px;font-family:var(--f-hand);font-size:21px;line-height:1.05;color:#2a2620}
+.left-note .note-t{margin:0}
+.note-x{position:absolute;top:1px;right:4px;width:22px;height:22px;padding:0;border:0;background:transparent;color:#2a2620;font-family:var(--f-hand);font-size:22px;line-height:1;cursor:pointer;min-height:0}
+.note-x:hover,.note-x:focus-visible{color:var(--c-red)}
 .chop{background:var(--c-paper);padding:12px 14px;width:100%}
 .chop canvas{display:block;width:100%;height:84px;touch-action:none;cursor:crosshair}
 .pads{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
@@ -333,13 +342,18 @@ button{font:inherit;color:inherit}
   .room-vp.on-wall .turn{bottom:calc(108px + env(safe-area-inset-bottom, 0px))}
   .drawer .count{display:none}
 }
-.refs ul{margin-top:4px;line-height:1.35}
+.refs ul{margin-top:4px;line-height:1.25}
 
 /* step 4: case-study links inside the workshop */
 .index .irow-wrap{display:grid;grid-template-columns:1fr auto;align-items:center}
 .index .icase{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--c-red);padding:12px 16px 12px 6px;min-height:44px;display:flex;align-items:center;text-decoration:none;white-space:nowrap}
 .index .icase:hover{text-decoration:underline}
-.noteback .cslink{display:block;margin-top:8px;font-family:var(--f-type);font-size:13px;color:var(--c-red)}
+.noteback .cslink{display:block;margin-top:auto;padding-top:6px;font-family:var(--f-type);font-size:13px;line-height:1.2;color:var(--c-red);position:relative;z-index:2}
+.it[data-id="rs"] .tape{pointer-events:none}
+.clip.rs-link{display:block;position:relative;z-index:1;color:inherit;text-decoration:none}
+.tag p.line{white-space:pre-line}
+.contact-card .em{color:inherit;text-decoration:underline}
+.drawer .flinks{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 
 
 /* step 5: bigger touch targets without changing how anything looks */
