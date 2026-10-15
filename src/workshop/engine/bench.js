@@ -99,22 +99,61 @@ const boardMesh = new T.Mesh(new T.BoxGeometry(BW, .05, BH), [mat('#f1eee6', .95
 boardMesh.position.y = .025; boardG.add(boardMesh); boardG.position.set(.25, 0, .5); boardG.rotation.y = -.08;
 reg(boardG, { id: 'board', proj: 'moodboard', weight: .8, inspectScale: 1.05 });
 
-/* ---------- 02 KWL STUDIO: Star Belt 001 (reversible) ---------- */
+/* ---------- 02 KWL STUDIO: Star Belt 001 (reversible) ----------
+   One continuous strap wound into a loose coil (Archimedean spiral), built as three smooth surfaces:
+   the face (quilted, colorway A), the lining (colorway B, shows on the inside of every turn), and painted edges.
+   Hardware follows the drawing: star studs along the face, a star buckle at the outer end, two keeper loops behind it. */
 const COLORWAYS = { 'black / red': ['#1b1a19', '#8a1a1a'], 'white / yellow': ['#e7e3da', '#d4ad1c'] };
 let cw = 'black / red', reversed = false;
-const outerM = new T.MeshStandardMaterial({ map: quiltTex, roughness: .62, side: T.FrontSide }), innerM = new T.MeshStandardMaterial({ map: quiltTex, roughness: .62, side: T.BackSide });
-function setColorway() { const [a, b] = COLORWAYS[cw]; outerM.color.set(reversed ? b : a); innerM.color.set(reversed ? a : b); }
+const beltTex = ctex(512, 128, (x, w, h) => { x.fillStyle = '#ffffff'; x.fillRect(0, 0, w, h);
+  x.strokeStyle = 'rgba(0,0,0,.28)'; x.lineWidth = 2; for (let i = -h; i < w + h; i += 32) { x.beginPath(); x.moveTo(i, 14); x.lineTo(i + (h - 28), h - 14); x.stroke(); x.beginPath(); x.moveTo(i, h - 14); x.lineTo(i + (h - 28), 14); x.stroke(); }
+  x.strokeStyle = 'rgba(0,0,0,.55)'; x.lineWidth = 2.2; x.setLineDash([7, 5]); [9, h - 9].forEach(y => { x.beginPath(); x.moveTo(0, y); x.lineTo(w, y); x.stroke(); }); x.setLineDash([]);
+  speck(x, w, h, 2400, ['rgba(0,0,0,.07)', 'rgba(255,255,255,.35)'], 1.1); });
+beltTex.wrapS = T.RepeatWrapping;
+const liningTex = ctex(256, 64, (x, w, h) => { x.fillStyle = '#ffffff'; x.fillRect(0, 0, w, h); speck(x, w, h, 1800, ['rgba(0,0,0,.08)', 'rgba(255,255,255,.4)'], 1.2); x.strokeStyle = 'rgba(0,0,0,.4)'; x.lineWidth = 1.6; x.setLineDash([6, 5]); [6, h - 6].forEach(y => { x.beginPath(); x.moveTo(0, y); x.lineTo(w, y); x.stroke(); }); });
+liningTex.wrapS = T.RepeatWrapping;
+const faceM = new T.MeshStandardMaterial({ map: beltTex, bumpMap: beltTex, bumpScale: .004, roughness: .72 });
+const liningM = new T.MeshStandardMaterial({ map: liningTex, roughness: .72 });
+const edgeM = mat('#0d0c0b', .45, .05);
+function setColorway() { const [a, b] = COLORWAYS[cw]; faceM.color.set(reversed ? b : a); liningM.color.set(reversed ? a : b); }
 setColorway();
+const SW = .24, ST = .022, R0 = .44, R1 = .67, TURNS = 1.6, NS = 260;
+const spiral = []; { let acc = 0; for (let i = 0; i <= NS; i++) { const th = i / NS * TURNS * Math.PI * 2, r = R0 + (R1 - R0) * i / NS; const c = new T.Vector3(Math.cos(th) * r, 0, Math.sin(th) * r);
+  if (i) acc += c.distanceTo(spiral[i - 1].c); const n = new T.Vector3(Math.cos(th), 0, Math.sin(th)); spiral.push({ c, n, s: acc, th }); } }
+const beltLen = spiral[NS].s;
+function strapSurface(off, v0, v1, flip, uScale) { const pos = [], uv = [], idx = [];
+  spiral.forEach(({ c, n, s }) => { const b = c.clone().addScaledVector(n, off); pos.push(b.x, v0, b.z, b.x, v1, b.z); uv.push(s * uScale, 0, s * uScale, 1); });
+  for (let i = 0; i < NS; i++) { const a = i * 2, b = a + 1, c2 = a + 2, d = a + 3; if (flip) idx.push(a, c2, b, b, c2, d); else idx.push(a, b, c2, b, d, c2); }
+  const g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); g.setIndex(idx); g.computeVertexNormals(); return g; }
+function strapEdge(y) { const pos = [], idx = []; spiral.forEach(({ c, n }) => { const o = c.clone().addScaledVector(n, ST / 2), i2 = c.clone().addScaledVector(n, -ST / 2); pos.push(o.x, y, o.z, i2.x, y, i2.z); });
+  for (let i = 0; i < NS; i++) { const a = i * 2; if (y > 0) idx.push(a, a + 2, a + 1, a + 1, a + 2, a + 3); else idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+  const g = new T.BufferGeometry(); g.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals(); return g; }
 const beltG = new T.Group();
-[.66, .58].forEach(r => { const o = new T.Mesh(new T.CylinderGeometry(r, r, .24, 72, 1, true), outerM); o.position.y = .12; beltG.add(o);
-  const i = new T.Mesh(new T.CylinderGeometry(r - .008, r - .008, .24, 72, 1, true), innerM); i.position.y = .12; beltG.add(i);
-  const lip = new T.Mesh(new T.CylinderGeometry(r, r, .006, 72, 1, true), mat('#0e0e0d', .7)); lip.position.y = .24; beltG.add(lip); });
-const studG = starGeo(.05, .022, .012), studM = mat('#111110', .55, .2);
-for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2 + .4; if (Math.abs(Math.sin(a)) < .2 && Math.cos(a) > 0) continue; const s = new T.Mesh(studG, studM); s.position.set(Math.cos(a) * .668, .12, Math.sin(a) * .668); s.lookAt(Math.cos(a) * 3, .12, Math.sin(a) * 3); beltG.add(s); }
-const buckle = new T.Mesh(starGeo(.3, .135, .07, .014), mat('#121211', .58, .25)); buckle.position.set(.74, .24, 0); buckle.lookAt(3, .24, 0); beltG.add(buckle);
-const tongue = new T.Mesh(new T.BoxGeometry(.03, .22, .55), outerM); tongue.position.set(.68, .11, -.3); tongue.rotation.y = .25; beltG.add(tongue);
+const strap = new T.Group(); strap.position.y = .002;
+strap.add(new T.Mesh(strapSurface(ST / 2, 0, SW, false, 1.9), faceM));
+strap.add(new T.Mesh(strapSurface(-ST / 2, 0, SW, true, 3.2), liningM));
+strap.add(new T.Mesh(strapEdge(SW), edgeM)); strap.add(new T.Mesh(strapEdge(0), edgeM));
+// rounded tip at the inner end (with three punched holes), squared cap at the buckle end
+const tipC = spiral[0]; const beltTip = new T.Mesh(new T.CylinderGeometry(SW / 2, SW / 2, ST, 24, 1, false, 0, Math.PI), edgeM);
+beltTip.position.set(tipC.c.x, SW / 2, tipC.c.z); beltTip.rotation.set(0, -tipC.th, Math.PI / 2); beltTip.rotateX(Math.PI / 2); strap.add(beltTip);
+const holeM = mat('#050505', .9); for (let k = 1; k <= 3; k++) { const sp = spiral[Math.round(k * 9)]; const h = new T.Mesh(new T.CircleGeometry(.014, 12), holeM); const p = sp.c.clone().addScaledVector(sp.n, ST / 2 + .0015); h.position.set(p.x, SW / 2, p.z); h.lookAt(p.x + sp.n.x, SW / 2, p.z + sp.n.z); strap.add(h); }
+beltG.add(strap);
+// star studs along the face, from the drawing: evenly spaced, skipping the tip and the buckle end
+const studG = starGeo(.046, .02, .012, .003), studM = mat('#0f0f0e', .48, .35);
+for (let s = .38; s < beltLen - .5; s += .2) { const sp = spiral.find(q => q.s >= s); const p = sp.c.clone().addScaledVector(sp.n, ST / 2 + .007); const st = new T.Mesh(studG, studM); st.position.set(p.x, SW / 2, p.z); st.lookAt(p.x + sp.n.x * 2, SW / 2, p.z + sp.n.z * 2); beltG.add(st); }
+// hardware at the outer end: two keeper loops, then the detachable star buckle
+const end = spiral[NS]; const tangent = end.c.clone().sub(spiral[NS - 1].c).normalize();
+function frameAt(sp, off) { const g = new T.Group(); const t = spiral[Math.min(NS, sp + 1)].c.clone().sub(spiral[Math.max(0, sp - 1)].c).normalize(); const n = spiral[sp].n;
+  g.position.copy(spiral[sp].c).addScaledVector(n, off); g.quaternion.setFromRotationMatrix(new T.Matrix4().makeBasis(n, new T.Vector3(0, 1, 0), t)); return g; }
+const keeperM = mat('#121211', .5, .4);
+[NS - 10, NS - 22].forEach(i => { const k = frameAt(i, 0); const kw = .03, kd = .045;
+  [[ST + 2 * kw, kw, kd, 0, SW + kw / 2], [ST + 2 * kw, kw, kd, 0, -kw / 2], [kw, SW + 2 * kw, kd, ST / 2 + kw / 2, SW / 2], [kw, SW + 2 * kw, kd, -ST / 2 - kw / 2, SW / 2]].forEach(([w, h, d, x, y]) => { const m = new T.Mesh(new T.BoxGeometry(w, h, d), keeperM); m.position.set(x, y, 0); k.add(m); }); beltG.add(k); });
+const buckleG = frameAt(NS, ST / 2 + .045);
+const buckle = new T.Mesh(starGeo(.3, .135, .06, .016), mat('#121211', .46, .45)); buckle.rotation.y = Math.PI / 2; buckle.position.y = SW / 2; buckleG.add(buckle);
+const bar = new T.Mesh(new T.BoxGeometry(.05, SW * .8, .05), mat('#0c0c0b', .5, .5)); bar.position.set(-.035, SW / 2, 0); buckleG.add(bar);
+beltG.add(buckleG);
 beltG.position.set(1.85, 0, 1.35); beltG.rotation.y = -.5;
-reg(beltG, { id: 'belt', proj: 'kwl', objLabel: 'Star Belt 001', weight: 1.1, flat: false, inspectScale: .58, wall: 'beltsketch', plates: ['belt-black', 'belt-white'] });
+reg(beltG, { id: 'belt', proj: 'kwl', objLabel: 'Star Belt 001', weight: 1.1, flat: false, inspectScale: .5, inspectEuler: [-.6, 2.2, 0], wall: 'beltsketch', plates: ['belt-black', 'belt-white'] });
 
 /* ---------- 02 KWL STUDIO: Peak Wallet 002, outline traced from the real product mockup ---------- */
 const WW = .98, WH = WW / WALLET.aspect, WD = .045;
@@ -124,9 +163,10 @@ function faceTex(key) { const t = itex(IMG[key]); t.repeat.set(1 / WW, 1 / WH); 
 const wFaceG = new T.ShapeGeometry(wShape); wFaceG.translate(-WW / 2, -WH / 2, 0);
 // ShapeGeometry UVs are shape coordinates (0..WW, 0..WH) before translate, so repeat 1/WW, 1/WH maps the cropped mockup exactly
 const walletInner = new T.Group();
-walletInner.add(new T.Mesh(wBody, mat('#1d2a40', .7)));
-const wFront = new T.Mesh(wFaceG, new T.MeshStandardMaterial({ map: faceTex('wallet-tex'), roughness: .75 })); wFront.position.z = WD / 2 + .008; walletInner.add(wFront);
-const wBack = new T.Mesh(wFaceG, new T.MeshStandardMaterial({ map: faceTex('wallet-tex-back'), roughness: .75 })); wBack.rotation.y = Math.PI; wBack.scale.x = -1; wBack.position.z = -WD / 2 - .008; walletInner.add(wBack);
+walletInner.add(new T.Mesh(wBody, mat('#141c2b', .42, .05))); // painted edge
+const wFrontTex = faceTex('wallet-tex'), wBackTex = faceTex('wallet-tex-back');
+const wFront = new T.Mesh(wFaceG, new T.MeshStandardMaterial({ map: wFrontTex, bumpMap: wFrontTex, bumpScale: .003, roughness: .7 })); wFront.position.z = WD / 2 + .008; walletInner.add(wFront);
+const wBack = new T.Mesh(wFaceG, new T.MeshStandardMaterial({ map: wBackTex, bumpMap: wBackTex, bumpScale: .003, roughness: .7 })); wBack.rotation.y = Math.PI; wBack.scale.x = -1; wBack.position.z = -WD / 2 - .008; walletInner.add(wBack);
 walletInner.rotation.x = -Math.PI / 2; walletInner.position.y = WD / 2 + .008;
 const walletG = new T.Group(); walletG.add(walletInner); walletG.position.set(3.05, 0, .5); walletG.rotation.y = .32;
 const wallet = reg(walletG, { id: 'wallet', proj: 'kwl', objLabel: 'Peak Wallet 002', weight: .7, inspectScale: 1.55, wall: 'walletsketch', plates: ['wallet-front', 'wallet-open'] });
@@ -134,9 +174,13 @@ const wallet = reg(walletG, { id: 'wallet', proj: 'kwl', objLabel: 'Peak Wallet 
 /* ---------- 03 YZY MOBILE: phone ---------- */
 const screens = [itex(IMG.shop), itex(IMG.album), itex(IMG.disco)]; let scrI = 0;
 const phoneG = new T.Group();
-const pb = new T.Mesh(new T.BoxGeometry(.82, .075, 1.68), mat('#1c1b19', .42, .15)); pb.position.y = .0375; phoneG.add(pb);
+const phoneShape = new T.Shape(); { const w = .82, h = 1.68, r = .12; phoneShape.moveTo(-w / 2 + r, -h / 2); phoneShape.lineTo(w / 2 - r, -h / 2); phoneShape.quadraticCurveTo(w / 2, -h / 2, w / 2, -h / 2 + r); phoneShape.lineTo(w / 2, h / 2 - r); phoneShape.quadraticCurveTo(w / 2, h / 2, w / 2 - r, h / 2); phoneShape.lineTo(-w / 2 + r, h / 2); phoneShape.quadraticCurveTo(-w / 2, h / 2, -w / 2, h / 2 - r); phoneShape.lineTo(-w / 2, -h / 2 + r); phoneShape.quadraticCurveTo(-w / 2, -h / 2, -w / 2 + r, -h / 2); }
+const pbGeo = new T.ExtrudeGeometry(phoneShape, { depth: .062, bevelEnabled: true, bevelThickness: .007, bevelSize: .007, bevelSegments: 3, curveSegments: 10 }); pbGeo.rotateX(-Math.PI / 2); pbGeo.translate(0, .007, 0);
+const pb = new T.Mesh(pbGeo, [mat('#121211', .3, .1), mat('#3a3934', .32, .7)]); phoneG.add(pb); // glass front, titanium-ish band
+[[.03, .23], [.03, .1], [-.03, .3]].forEach(([dx, z], i) => { const btn = new T.Mesh(new T.BoxGeometry(.012, .028, i === 2 ? .2 : .12), mat('#3a3934', .32, .7)); btn.position.set(dx > 0 ? .418 : -.418, .038, -z); phoneG.add(btn); });
 const scrMat = new T.MeshBasicMaterial({ map: screens[0], toneMapped: false, color: '#e8e8e8' });
-const scr = new T.Mesh(new T.PlaneGeometry(.74, 1.6), scrMat); scr.rotation.x = -Math.PI / 2; scr.position.y = .0762; phoneG.add(scr);
+const scr = new T.Mesh(new T.PlaneGeometry(.74, 1.6), scrMat); scr.rotation.x = -Math.PI / 2; scr.position.y = .0765; phoneG.add(scr);
+const glass = new T.Mesh(new T.PlaneGeometry(.78, 1.64), new T.MeshStandardMaterial({ color: '#ffffff', roughness: .08, metalness: 0, transparent: true, opacity: .07, depthWrite: false })); glass.rotation.x = -Math.PI / 2; glass.position.y = .0772; phoneG.add(glass);
 phoneG.position.set(-2.45, 0, 1.2); phoneG.rotation.y = .3;
 reg(phoneG, { id: 'phone', proj: 'yzy', weight: 1 });
 
@@ -166,7 +210,10 @@ const cardM = mat('#efe8d8', .95), tabM = mat('#c9b48e', .9); const catCards = [
 for (let i = 0; i < 22; i++) { const c = new T.Mesh(new T.BoxGeometry(.84, .44, .008), cardM); const z = -CD / 2 + .1 + i * .046; c.position.set(0, .25, z); c.rotation.x = -.1 + Math.sin(i * 1.7) * .05; c.userData = { baseY: .25, pop: 0 }; catG.add(c); catCards.push(c);
   if (i % 4 === 1) { const t = new T.Mesh(new T.BoxGeometry(.14, .05, .008), tabM); t.position.set(-.3 + (i % 3) * .3, .245, 0); c.add(t); } }
 const plateTex = ctex(400, 120, (x, w, h) => { x.fillStyle = '#E9E2D2'; x.fillRect(0, 0, w, h); x.strokeStyle = '#8a7a5c'; x.lineWidth = 6; x.strokeRect(3, 3, w - 6, h - 6); x.fillStyle = '#1d1b18'; x.textAlign = 'center'; x.font = '700 40px "JetBrains Mono", monospace'; x.fillText('YE ARCHIVE', w / 2, 58); x.font = '400 22px "JetBrains Mono", monospace'; x.fillText((YE.total || 0).toLocaleString('en-US') + ' records', w / 2, 94); });
-const plate = new T.Mesh(new T.PlaneGeometry(.46, .14), new T.MeshStandardMaterial({ map: plateTex, roughness: .6, metalness: .1 })); plate.position.set(0, .18, CD / 2 + .002); catG.add(plate);
+const plate = new T.Mesh(new T.PlaneGeometry(.46, .14), new T.MeshStandardMaterial({ map: plateTex, roughness: .6, metalness: .1 })); plate.position.set(0, .21, CD / 2 + .004); catG.add(plate);
+const brassM = mat('#a8884f', .35, .85);
+[[.5, .016, 0, .287], [.5, .016, 0, .133], [.016, .17, -.242, .21], [.016, .17, .242, .21]].forEach(([w, h, x, y]) => { const f = new T.Mesh(new T.BoxGeometry(w, h, .012), brassM); f.position.set(x, y, CD / 2 + .004); catG.add(f); });
+const pull = new T.Mesh(new T.TorusGeometry(.07, .012, 10, 24, Math.PI), brassM); pull.rotation.z = Math.PI; pull.position.set(0, .085, CD / 2 + .01); catG.add(pull);
 catG.position.set(-4.15, 0, .55); catG.rotation.y = .28;
 reg(catG, { id: 'catalog', proj: 'archive', weight: 1.6, flat: false, inspectScale: .82 });
 function popCard() { const c = catCards[(Math.random() * catCards.length) | 0]; c.userData.pop = 1; }
@@ -240,7 +287,7 @@ function controls(it) {
   if (it.id === 'phone') return [btn('Next screen', () => { scrI = (scrI + 1) % screens.length; scrMat.map = screens[scrI]; scrMat.needsUpdate = true; })];
   if (it.id === 'belt') { const out = Object.entries(COLORWAYS).map(([n, [a, b]]) => { const s = btn('', () => { cw = n; setColorway(); out.forEach(x => x.setAttribute('aria-pressed', x.dataset.c === cw)); }, 'sw'); s.dataset.c = n; s.style.background = `linear-gradient(135deg, ${a} 50%, ${b} 50%)`; s.setAttribute('aria-label', n); s.setAttribute('aria-pressed', n === cw); return s; });
     return [...out, btn('Reverse it', () => { reversed = !reversed; setColorway(); it.angPop = 1; })]; }
-  if (it.id === 'wallet') return [btn('Turn it over', () => { it.userQ.premultiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(0, 1, 0), Math.PI)); })];
+  if (it.id === 'wallet') return [btn('Turn it over', () => { it.localQ = (it.localQ || new T.Quaternion()).multiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(0, 0, 1), Math.PI)); })];
   if (it.id === 'disc') return [btn('Put it on', () => release(P.x, P.z))];
   if (it.id === 'stage') return [btn(lightsOn ? 'Lights off' : 'Stage lights', e => { lightsOn = !lightsOn; e.currentTarget.textContent = lightsOn ? 'Lights off' : 'Stage lights'; })];
   if (it.id === 'catalog') { const wrap = el('div', 'ye-search'); const lab = el('label', '', 'Search ' + YE.sample.length + ' of ' + YE.total.toLocaleString('en-US') + ' records'); lab.htmlFor = 'ye-q'; const inp = el('input'); inp.id = 'ye-q'; inp.type = 'search'; inp.placeholder = 'yeezus, donda, glow in the dark...'; inp.autocomplete = 'off'; const ul = el('ul'); ul.setAttribute('aria-live', 'polite');
@@ -261,7 +308,7 @@ function describe(it) {
 }
 api.showContact = () => openTag({ k: 'contact', h: 'Say hi', line: links.email, acts: [ext('Resume', links.resume)] });
 const up = new T.Vector3(0, 1, 0), toCam = new T.Vector3(), tmpV = new T.Vector3();
-function inspect(it) { if (!it) return; if (inspected && inspected !== it) release(); inspected = it; it.held = false; it.inspecting = true; it.saved = { x: it.x, z: it.z }; it.userQ.identity(); hideHover(); describe(it); }
+function inspect(it) { if (!it) return; if (inspected && inspected !== it) release(); inspected = it; it.held = false; it.inspecting = true; it.saved = { x: it.x, z: it.z }; it.userQ.identity(); it.localQ = null; hideHover(); describe(it); }
 function release(nx, nz) { const it = inspected; if (!it) return; inspected = null; it.inspecting = false; it.returning = true; if (nx != null) { it.x = nx; it.z = nz; } else { it.x = it.saved.x; it.z = it.saved.z; } it.stackY = 0; closeTag(); }
 function click(it) { if (it.id === 'stone' || it.id === 'pencil') { it.vy = 3.2; thump(it.weight); return; } inspect(it); }
 api.inspectById = id => inspect(items.find(i => i.id === id));
@@ -320,8 +367,8 @@ function step(dt, t) {
   for (const it of items) { const g = it.g;
     if (it.inspecting) { camera.getWorldDirection(camDir); const target = tmpV.copy(camera.position).addScaledVector(camDir, W < 700 ? 3.4 : 2.6); target.y -= .12; if (W >= 700) target.addScaledVector(new T.Vector3(1, 0, 0), .45);
       g.position.lerp(target, 1 - Math.exp(-dt * 9)); toCam.copy(camera.position).sub(g.position).normalize();
-      if (it.flat) tq.setFromUnitVectors(up, toCam); else tq.setFromEuler(new T.Euler(.42, 0, 0));
-      tq.premultiply(it.userQ); g.quaternion.slerp(tq, 1 - Math.exp(-dt * 9)); const s = it.inspectScale; g.scale.lerp(tmpV.set(s, s, s), 1 - Math.exp(-dt * 9)); continue; }
+      if (it.flat) tq.setFromUnitVectors(up, toCam); else tq.setFromEuler(new T.Euler(...(it.inspectEuler || [.42, 0, 0])));
+      if (it.localQ) tq.multiply(it.localQ); tq.premultiply(it.userQ); g.quaternion.slerp(tq, 1 - Math.exp(-dt * 9)); const s = it.inspectScale; g.scale.lerp(tmpV.set(s, s, s), 1 - Math.exp(-dt * 9)); continue; }
     g.scale.lerp(tmpV.set(1, 1, 1), 1 - Math.exp(-dt * 9));
     const ground = Math.max(groundAt(it.x, it.z), it.stackY);
     if (it.returning) { g.position.lerp(tmpV.set(it.x, Math.max(g.position.y, ground), it.z), 1 - Math.exp(-dt * 8)); if (g.position.distanceTo(tmpV) < .05) { it.returning = false; it.y = g.position.y; it.vy = 0; } }

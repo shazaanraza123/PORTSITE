@@ -23,3 +23,10 @@ Source of truth: `docs/workshop/reference/the-workshop-collection-study.html` (t
 
 ## Known pre-existing issue
 `npm run lint` crashes on `main` too: `reactHooks.configs.flat` is undefined with the installed `eslint-plugin-react-hooks@5`. Not touched in this step.
+
+# Step 1: object realism (separate commit)
+- **Star Belt 001:** was two concentric open cylinders plus a box. Now one continuous strap wound in a 1.6-turn Archimedean spiral (r .44 to .67, 260 samples). Three smooth surfaces: quilted face (colorway A, diamond quilting + dashed stitching on both edges, light bump), lining (colorway B, stitched edges), painted edges. A rounded tip with three punched holes at the inner end. Star studs every 0.2 units along the face. Two keeper loops and the star buckle (with its bar) at the outer end, as in the drawing. Reverse swaps face and lining. Inspect pose `[-.6, 2.2, 0]` at scale .5 turns the buckle to the viewer, like a product shot.
+- **Peak Wallet 002:** painted edge (darker, slightly glossy), leather grain via bump from its own texture. "Turn it over" now flips in the wallet's own frame (it used to spin edge-on).
+- **Phone:** rounded-rect slab (r .12) with bevel, glass front, metal band, side buttons, faint glass sheen over the screen.
+- **YE ARCHIVE catalog:** brass label frame and a brass drawer pull.
+- Engine: optional per-item `inspectEuler` and a local flip quaternion. Nothing else changed.
