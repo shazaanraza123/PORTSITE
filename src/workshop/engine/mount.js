@@ -33,13 +33,14 @@ room = createRoom({ track: $("room"), bench, wall, wallLayer, benchUI: [...root.
 
 /* ---------- index: the plain way to everything ---------- */
 const rows = [];
-FEATURED_ORDER.forEach((k, i) => { const p = FEATURED[k]; rows.push({ g: "On the bench", n: p.n, s: p.meta.split("/").pop().trim(), d: p.obj, go: () => toBench(p.bench) }); });
-Object.values(WALL_PROJECTS).forEach(p => rows.push({ g: "On the wall", n: p.n, s: "wall", d: p.meta, go: () => room.goWall(() => wall.highlight(p.wallId)) }));
+FEATURED_ORDER.forEach((k, i) => { const p = FEATURED[k]; rows.push({ g: "On the bench", n: p.n, s: p.meta.split("/").pop().trim(), d: p.obj, slug: p.slug, go: () => toBench(p.bench) }); });
+Object.values(WALL_PROJECTS).forEach(p => rows.push({ g: "On the wall", n: p.n, s: "wall", d: p.meta, slug: p.slug, go: () => room.goWall(() => wall.highlight(p.wallId)) }));
 DRAWER.forEach((f, fi) => f.items.forEach(p => { if (f.folder === "In progress" && p.n === "Kick the Can") return; rows.push({ g: "In the drawer", n: p.n, s: p.status, d: f.folder + " / " + p.line, go: () => room.goWall(() => wall.openDrawer(fi)) }); }));
 function renderIndex(q) { const body = $("index-body"); body.innerHTML = ""; q = (q || "").trim().toLowerCase(); let cur = null;
   rows.filter(r => !q || (r.n + " " + r.d + " " + r.s).toLowerCase().includes(q)).forEach(r => { if (r.g !== cur) { cur = r.g; const h = document.createElement("h4"); h.textContent = cur; body.appendChild(h); }
     const b = document.createElement("button"); b.type = "button"; b.className = "irow"; b.innerHTML = "<b></b><span></span><small></small>"; b.children[0].textContent = r.n; b.children[1].textContent = r.s; b.children[2].textContent = r.d;
-    b.addEventListener("click", () => { closePanels(); r.go(); }); body.appendChild(b); });
+    b.addEventListener("click", () => { closePanels(); r.go(); });
+    if (r.slug) { const wrap = document.createElement("div"); wrap.className = "irow-wrap"; const a = document.createElement("a"); a.className = "icase"; a.href = caseStudy(r.slug); a.textContent = "case study"; a.setAttribute("aria-label", r.n + " case study"); wrap.append(b, a); body.appendChild(wrap); } else body.appendChild(b); });
   if (!body.children.length) body.innerHTML = '<h4>Nothing matches.</h4>'; }
 rows.push({ g: "Me", n: "About", s: "wall", d: "the folded note", go: () => room.goWall(() => wall.openAbout()) });
 rows.push({ g: "Me", n: "Resume", s: "pdf", d: "opens in a new tab", go: () => window.open(LINKS.resume, "_blank", "noopener") });
@@ -54,6 +55,9 @@ $("n-about").addEventListener("click", () => { closePanels(); room.goWall(() => 
 const onEsc = e => { if (e.key === "Escape") closePanels(); }; window.addEventListener("keydown", onEsc, L);
 vp.addEventListener("pointerdown", e => { if (!e.target.closest(".index,.contact-card,.top-nav")) closePanels(); }, L);
 const api = { bench, wall, room, destroy() { lifetime.abort(); room.destroy(); wall.destroy(); bench.destroy(); } };
+// deep links from case studies: /#b-<bench object> opens it on the bench, /#t-<wall item> walks up and highlights it
+const deep = (window.location.hash || "").match(/^#(b|t)-([\w-]+)$/);
+if (deep) { history.replaceState(null, "", window.location.pathname); setTimeout(() => { if (deep[1] === "b") toBench(deep[2]); else room.goWall(() => wall.highlight(deep[2])); }, 400); }
 root.__workshop = api; // handle for tests and debugging
 return api;
 }

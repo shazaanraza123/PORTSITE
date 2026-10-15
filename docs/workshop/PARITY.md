@@ -45,3 +45,12 @@ Source of truth: `docs/workshop/reference/the-workshop-collection-study.html` (t
 - The wall's "on the bench" links show on hover or keyboard focus for mouse users (and while an item is highlighted). They stay always visible on touch screens. Every link is still a focusable button in the DOM.
 - Measured: nothing on the wall sits under the tapes at 1440x880, 1024x768 or 390x844. Visible bench-links at rest on desktop: 7 → 2 (the two inside content).
 - Also fixed: the pinned refs list ran past its card (it did in the approved prototype too).
+
+# Step 4: case-study pages (separate commit)
+- 11 pages at `/work/<slug>`: the six bench projects, Spotify Map, and the four wall campaigns (Yeezy marketing, LA Apparel, artist marketing, creative journey). One template (`src/cases/CaseStudy.tsx`) in the Workshop's language: the real artifact leads, then role/year/status/tools, then sections.
+- Content comes from `src/data/projects` (the copy that was already on shazport) and the real screenshots, drawings, flyers and clips in `public/cases/` (60 optimized JPEGs). Each page ends with a plain "Sources" line. Nothing invented: no metrics, no shipped status that isn't true, product mockups labelled as mockups. Nothing from the 2021 KW deck.
+- Spotify Map has a Code link only. The old live URL wasn't verified, so it's left off.
+- Routing: tiny path router in `App.tsx`, no new dependency. Same-origin links are intercepted, so "View project" on the bench, "case study" in the Index and on the wall, and "next" all navigate in place. Back returns to the workshop. Unknown slugs get a plain not-found page.
+- Links back in: "On the bench" (`/#b-<id>`) opens that object, "The thinking, on the wall" (`/#t-<id>`) walks up and highlights the sketch.
+- Code split: case pages don't load three.js (CaseStudy chunk about 44KB, WorkshopRoom about 755KB).
+- Checked: all 11 pages 200, 0 broken images, no horizontal overflow, no console errors at 1440 and 390 wide. Flow test passes (bench → case in place, back, both deep links, wall and index case links, next, unknown slug).

@@ -5,7 +5,7 @@ const GH = "https://github.com/shazaanraza123/";
 export const LINKS = {
   resume: "https://shazport.netlify.app",   // [replace with the real resume PDF]
   email: "[your email]",                    // [replace]
-  caseStudyBase: "https://shazport.netlify.app" // [each project gets /work/<slug> once case studies are built]
+  caseStudyBase: "/work"
 };
 
 // THE BENCH: six featured objects. key = project id. obj = the physical thing on the bench.
@@ -35,12 +35,12 @@ export const FEATURED_ORDER = ["moodboard", "kwl", "yzy", "samples", "archive", 
 
 // THE WALL: projects that live as artifacts of thinking (and are still reachable from the index)
 export const WALL_PROJECTS = {
-  map: { n: "Spotify Map", meta: "Product design + front-end / 2026 / Live", wallId: "map", code: GH + "Spotify-Map",
+  map: { n: "Spotify Map", meta: "Product design + front-end / 2026 / Concept, working prototype", wallId: "map", slug: "spotify-map", code: GH + "Spotify-Map",
     live: "https://spotify-samples-8gia-e0j3hj9id-shazaanraza123s-projects.vercel.app/" }, // [check: this URL is copied from the current site and points at a spotify-samples deploy]
-  yeezy: { n: "Yeezy Marketing", meta: "Vultures rollout + Yeezy clothing / 2024", wallId: "yzposter" },
-  la: { n: "LA Apparel", meta: "Visual content + short form / 2023 to 2024", wallId: "laprint" },
-  artists: { n: "Artist Marketing", meta: "@mysp8c, @kinoftw, @oodaredevil / 2025 to now", wallId: "kino" },
-  journey: { n: "The Creative Journey", meta: "Fan pages, Rolling Stone feature / 2022 to now", wallId: "profile" }
+  yeezy: { n: "Yeezy Marketing", meta: "Vultures rollout + Yeezy clothing / 2024", wallId: "yzposter", slug: "yeezy-marketing" },
+  la: { n: "LA Apparel", meta: "Visual content + short form / 2023 to 2024", wallId: "laprint", slug: "la-apparel" },
+  artists: { n: "Artist Marketing", meta: "@mysp8c, @kinoftw, @oodaredevil / 2025 to now", wallId: "kino", slug: "artist-marketing" },
+  journey: { n: "The Creative Journey", meta: "Fan pages, Rolling Stone feature / 2022 to now", wallId: "profile", slug: "creative-journey" }
 };
 
 // THE DRAWER: everything else, filed by kind. status: built | in progress | needs link
@@ -66,4 +66,4 @@ export const DRAWER = [
     { n: "YZY app concepts", line: "2021 concept sketches. Private, ask me.", status: "private", href: null } ] }
 ];
 
-export const caseStudy = slug => LINKS.caseStudyBase; // [swap to `/work/${slug}` once the routes exist]
+export const caseStudy = slug => `${LINKS.caseStudyBase}/${slug}`;

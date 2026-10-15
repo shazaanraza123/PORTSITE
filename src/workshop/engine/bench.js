@@ -299,7 +299,7 @@ function controls(it) {
 }
 function describe(it) {
   const pr = it.proj && FEATURED[it.proj];
-  if (pr) { const n = ORDER.indexOf(it.proj) + 1; const acts = [ext('View project', caseStudy(pr.slug))]; if (pr.live) acts.push(ext('Live', pr.live)); if (pr.code) acts.push(ext('Code', pr.code));
+  if (pr) { const n = ORDER.indexOf(it.proj) + 1; const vp = el('a', 'ext', 'View project <span aria-hidden="true">&#8594;</span>'); vp.href = caseStudy(pr.slug); const acts = [vp]; if (pr.live) acts.push(ext('Live', pr.live)); if (pr.code) acts.push(ext('Code', pr.code));
     acts.push(btn('See the thinking <span aria-hidden="true">&#8593;</span>', () => { const w = it.wall || pr.wall; release(); onThinking(w); }, 'thinking'));
     return openTag({ k: 'OBJECT / 00' + n, h: pr.n, obj: it.objLabel || pr.obj, meta: pr.meta, line: pr.line, plates: it.plates || pr.plates, portrait: it.plates ? false : pr.portrait, ctl: controls(it), acts }); }
   if (it.id === 'card') return openTag({ k: 'who made all this', h: 'Shazaan Raza', meta: 'Product design / creative technology / front-end', line: 'The finished work is on this bench. How I think is on the wall behind it.', acts: [btn('Look at the wall <span aria-hidden="true">&#8593;</span>', () => { release(); onAbout(); }, 'thinking'), ext('Resume', links.resume)] });
