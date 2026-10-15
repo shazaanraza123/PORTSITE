@@ -22,7 +22,8 @@ export function createRoom(opts) {
     wallLayer.style.transform = RM ? 'none' : `perspective(1400px) translateY(${lift}%) rotateX(${tilt}deg) scale(${(.9 + wf * .1).toFixed(3)})`;
     wallLayer.style.pointerEvents = wf > .95 ? 'auto' : 'none';
     wallLayer.setAttribute('aria-hidden', wf > .5 ? 'false' : 'true');
-    benchUI.forEach(el => { el.style.opacity = (1 - smooth(.08, .3, p)).toFixed(3); el.style.pointerEvents = p < .2 ? 'auto' : 'none'; });
+    wallLayer.inert = wf <= .5; // keyboard focus can't wander into the wall while you're at the bench
+    benchUI.forEach(el => { el.style.opacity = (1 - smooth(.08, .3, p)).toFixed(3); el.style.pointerEvents = p < .2 ? 'auto' : 'none'; el.inert = p >= .2; });
     const nowWall = p > .6;
     if (nowWall !== onWall) { onWall = nowWall; toggle.innerHTML = onWall ? '&#8595; the bench' : 'the wall &#8593;'; wallLayer.parentElement.classList.toggle('on-wall', onWall); toggle.setAttribute('aria-label', onWall ? 'Go back to the bench' : 'Look up at the wall'); }
     if (meter) meter.style.setProperty('--p', p.toFixed(3));

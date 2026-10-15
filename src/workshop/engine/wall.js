@@ -36,7 +36,7 @@ const print = (img, alt, cls) => `<div class="${cls || 'print'} shadowy"><img da
 const DEFS = [
  // the person
  { id: 'name', w: 420, h: 104, r: -1, p: [20, 0], label: 'Name', html: `<div class="namecard"><span class="strip">shazaan raza</span><br><span class="sub">product design / creative tech / front-end</span></div>` },
- { id: 'how', w: 240, h: 178, r: 1.2, p: [30, 122], label: 'How I work', html: `<div class="idx shadowy"><h4>HOW I WORK</h4><p class="ln">1. pin the references first.</p><p class="ln">2. sketch it on paper.</p><p class="ln">3. build it the same week.</p><p class="ln">4. matte, never glossy.</p></div>` },
+ { id: 'how', w: 240, h: 178, r: 1.2, p: [30, 122], label: 'How I work', html: `<div class="idx shadowy"><h3>HOW I WORK</h3><p class="ln">1. pin the references first.</p><p class="ln">2. sketch it on paper.</p><p class="ln">3. build it the same week.</p><p class="ln">4. matte, never glossy.</p></div>` },
  { id: 'about', w: 150, h: 104, ow: 310, oh: 300, r: -3, p: [288, 150], fold: true, label: 'Folded note, about me. Press Enter to unfold.', cover: `<span>about me</span><small>(unfold)</small>`, body: `<h4>hi, i'm shaz.</h4><p>I design products and then build them. Figma to React, Swift when it needs to be in your hand.</p><p>Worked on the YZY app and media for Ye's world tour. Run KWL Studio, a drop-only accessories label in Chicago. CS at Illinois Tech, class of 2026.</p><p><a href="${links.resume}" target="_blank" rel="noopener">resume</a> / ${links.email}</p>` },
  { id: 'profile', w: 118, h: 150, r: 3, p: [300, 290], flip: true, label: 'The Creative Journey: fan page print. Double-click to flip.', html: `<figure class="pol shadowy" style="margin:0"><img data-img="ig-profile" alt="@yelova911 Instagram profile"><figcaption style="font-size:17px">fan page</figcaption></figure><span class="tape t1"></span>`, back: `<div class="noteback"><b>@yelova911</b>three years building in public.${cs('creative-journey')}</div>` },
  { id: 'pad', w: 185, h: 160, r: 2, p: [30, 330], label: 'Sticky note pad', html: `<div class="sticky shadowy"><label for="wall-note-in" style="display:block">leave me a note</label><textarea id="wall-note-in" maxlength="80"></textarea><button type="button" class="stick">stick it on the wall</button></div>` },
@@ -83,13 +83,14 @@ function layout() { const W = stage.offsetWidth, H = stage.offsetHeight; if (!W)
     const sx = Math.max(1, (W / scale) / FRAME_W), syc = Math.max(.72, Math.min(1.25, sy));
     labelEls.forEach((e, i) => { e.hidden = false; e.style.left = LABELS[i].p[0] * sx + 'px'; e.style.top = TOP + LABELS[i].p[1] * syc + 'px'; });
     spacer.style.height = '0px'; }
-  else { DW = 560; scale = W / DW; const cols = [230, 230], colW = 270; let maxY = 0; labelEls.forEach(e => { e.hidden = true; });
+  // a piece with an 'on the bench' tape hanging under it needs room for it, or the next card covers the tape
+  else { const gapOf = it => it.el.querySelector(':scope > .tobench') ? 54 : 34; DW = 560; scale = W / DW; const cols = [230, 230], colW = 270; let maxY = 0; labelEls.forEach(e => { e.hidden = true; });
     items.forEach((it, i) => { if (!it.p) { place(it); return; } if (!it.userMoved) { const jit = ((i * 37) % 17) - 8;
-        if (it.w > 262) { const y = Math.max(cols[0], cols[1]); it.x = (DW - it.w) / 2 + jit; it.y = y; cols[0] = cols[1] = y + it.h + 34; }
-        else { const c = cols[0] <= cols[1] ? 0 : 1; it.x = 10 + c * (colW + 10) + (colW - it.w) / 2 + jit; it.y = cols[c]; cols[c] += it.h + 34; } }
+        if (it.w > 262) { const y = Math.max(cols[0], cols[1]); it.x = (DW - it.w) / 2 + jit; it.y = y; cols[0] = cols[1] = y + it.h + gapOf(it); }
+        else { const c = cols[0] <= cols[1] ? 0 : 1; it.x = 10 + c * (colW + 10) + (colW - it.w) / 2 + jit; it.y = cols[c]; cols[c] += it.h + gapOf(it); } }
       maxY = Math.max(maxY, it.y + it.h); place(it); });
     DH = Math.max(H / scale, maxY + 220); spacer.style.height = (DH * scale) + 'px'; }
-  board.style.width = DW + 'px'; board.style.height = DH + 'px'; board.style.transform = `scale(${scale})`; drawWave(); }
+  board.style.width = DW + 'px'; board.style.height = DH + 'px'; board.style.transform = `scale(${scale})`; board.style.setProperty('--s', scale); drawWave(); }
 
 /* ---------- swing physics ---------- */
 let anim = 0, lastT = performance.now();
@@ -97,7 +98,7 @@ function wake() { if (!anim) { lastT = performance.now(); anim = requestAnimatio
 function tick(now) { const dt = Math.min(.033, (now - lastT) / 1000); lastT = now; let busy = false;
   for (const it of items) { if (RM) { it.ang = 0; continue; } it.angV += (it.swingT - it.ang) * 140 * dt; it.angV *= Math.exp(-dt * 6); it.ang += it.angV * dt; if (Math.abs(it.ang - it.swingT) > .05 || Math.abs(it.angV) > .05 || it.drag) busy = true; place(it); }
   anim = busy ? requestAnimationFrame(tick) : 0; }
-function toggleFlip(it) { it.flipped = !it.flipped; it.el.classList.toggle('flipped', it.flipped); it.angV += it.flipped ? 40 : -40; wake(); }
+function toggleFlip(it) { it.flipped = !it.flipped; if (it.flipped) it.el.style.zIndex = ++z; /* a flipped card comes to the front, like picking it up */ it.el.classList.toggle('flipped', it.flipped); it.angV += it.flipped ? 40 : -40; wake(); }
 function toggleOpen(it, force) { it.open = force != null ? force : !it.open; const f = it.el.querySelector('.fold'); f.classList.toggle('open', it.open); if (it.open) { f.classList.remove('unfold'); void f.offsetWidth; f.classList.add('unfold'); it.el.style.zIndex = ++z; } place(it); }
 function bind(it) { const e = it.el;
   e.addEventListener('pointerdown', ev => { if (ev.target.closest('a,button,textarea,canvas,input,label')) return; ev.preventDefault(); e.setPointerCapture(ev.pointerId);
@@ -107,7 +108,9 @@ function bind(it) { const e = it.el;
     const now = performance.now(), vx = (ev.clientX - d.lx) / Math.max(8, now - d.lt); it.swingT = Math.max(-18, Math.min(18, -vx * 16)); d.lx = ev.clientX; d.lt = now; place(it); });
   const up = () => { const d = it.drag; if (!d) return; it.drag = null; e.classList.remove('held'); it.swingT = 0; wake();
     if (!d.moved) { const now = performance.now(); if (it.fold) toggleOpen(it); else if (it.tap === 'flip') toggleFlip(it); else if (it.flip && now - it.lastTap < 340) { toggleFlip(it); it.lastTap = 0; return; } it.lastTap = now; } };
-  e.addEventListener('pointerup', up); e.addEventListener('pointercancel', up);
+  // a cancelled pointer means the browser took the gesture (a scroll on phones): drop it, never treat it as a tap
+  const cancel = () => { if (!it.drag) return; it.drag = null; e.classList.remove('held'); it.swingT = 0; wake(); };
+  e.addEventListener('pointerup', up); e.addEventListener('pointercancel', cancel);
   e.addEventListener('dblclick', ev => { if (it.flip && !it.tap && ev.pointerType !== 'touch') { /* handled by double-tap logic */ } });
   e.addEventListener('keydown', ev => { if (ev.target !== e) return; if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); if (it.fold) toggleOpen(it); else if (it.flip) toggleFlip(it); }
     const mv = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, -12], ArrowDown: [0, 12] }[ev.key]; if (mv) { ev.preventDefault(); it.x += mv[0]; it.y += mv[1]; it.userMoved = true; it.angV += mv[0] * 3; wake(); place(it); } }); }

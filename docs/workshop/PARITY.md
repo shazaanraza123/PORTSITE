@@ -54,3 +54,6 @@ Source of truth: `docs/workshop/reference/the-workshop-collection-study.html` (t
 - Links back in: "On the bench" (`/#b-<id>`) opens that object, "The thinking, on the wall" (`/#t-<id>`) walks up and highlights the sketch.
 - Code split: case pages don't load three.js (CaseStudy chunk about 44KB, WorkshopRoom about 755KB).
 - Checked: all 11 pages 200, 0 broken images, no horizontal overflow, no console errors at 1440 and 390 wide. Flow test passes (bench → case in place, back, both deep links, wall and index case links, next, unknown slug).
+
+# Step 5: testing and fixes (separate commit)
+See `TESTING.md`. Engine changes are limited to touch panning, cleanup on destroy, merged static meshes, `inert` while hidden, and phone-only touch areas. No visual redesign.

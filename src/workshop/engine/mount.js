@@ -47,7 +47,7 @@ rows.push({ g: "Me", n: "Resume", s: "pdf", d: "opens in a new tab", go: () => w
 rows.push({ g: "Me", n: "Contact", s: "email", d: LINKS.email, go: () => { $("contact-card").hidden = false; $("n-contact").setAttribute("aria-expanded", "true"); } });
 renderIndex("");
 $("index-q").addEventListener("input", e => renderIndex(e.target.value), L);
-$("index-q").addEventListener("keydown", e => e.stopPropagation(), L);
+$("index-q").addEventListener("keydown", e => { e.stopPropagation(); if (e.key === "Escape") { closePanels(); $("n-index").focus(); } }, L); // keys stay out of the bench, but Escape still closes
 $("n-index").addEventListener("click", () => { const open = $("index").hidden; closePanels(); $("index").hidden = !open; $("n-index").setAttribute("aria-expanded", open); if (open) setTimeout(() => $("index-q").focus({ preventScroll: true }), 30); }, L);
 $("n-contact").addEventListener("click", () => { const open = $("contact-card").hidden; closePanels(); $("contact-card").hidden = !open; $("n-contact").setAttribute("aria-expanded", open); }, L);
 $("contact-email").textContent = LINKS.email; $("contact-resume").href = LINKS.resume;

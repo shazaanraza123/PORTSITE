@@ -17,6 +17,14 @@ renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.PCFSoftShadowMap;
 renderer.outputEncoding = T.sRGBEncoding; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.08;
 holder.appendChild(renderer.domElement);
 const cv = renderer.domElement;
+// merge many small static meshes that share a material into one draw call (looks identical, far fewer calls on phones)
+function mergeMeshes(meshes, material) { const pos = [], nor = [], uv = [], idx = []; let off = 0;
+  meshes.forEach(m => { m.updateMatrix(); const g = m.geometry.clone().applyMatrix4(m.matrix); const P = g.attributes.position, N = g.attributes.normal, U = g.attributes.uv;
+    for (let k = 0; k < P.count; k++) { pos.push(P.getX(k), P.getY(k), P.getZ(k)); nor.push(N.getX(k), N.getY(k), N.getZ(k)); if (U) uv.push(U.getX(k), U.getY(k)); else uv.push(0, 0); }
+    if (g.index) for (let k = 0; k < g.index.count; k++) idx.push(g.index.getX(k) + off); else for (let k = 0; k < P.count; k++) idx.push(k + off);
+    off += P.count; g.dispose(); });
+  const out = new T.BufferGeometry(); out.setAttribute('position', new T.Float32BufferAttribute(pos, 3)); out.setAttribute('normal', new T.Float32BufferAttribute(nor, 3)); out.setAttribute('uv', new T.Float32BufferAttribute(uv, 2)); out.setIndex(idx);
+  return new T.Mesh(out, material); }
 const scene = new T.Scene(); scene.background = new T.Color('#BDB3A4'); scene.fog = new T.Fog('#BDB3A4', 15, 30);
 const camera = new T.PerspectiveCamera(34, 1, .1, 80);
 const pose = { bench: { pos: new T.Vector3(), look: new T.Vector3(0, 0, .35) }, wall: { pos: new T.Vector3(), look: new T.Vector3() } };
@@ -140,7 +148,7 @@ const holeM = mat('#050505', .9); for (let k = 1; k <= 3; k++) { const sp = spir
 beltG.add(strap);
 // star studs along the face, from the drawing: evenly spaced, skipping the tip and the buckle end
 const studG = starGeo(.046, .02, .012, .003), studM = mat('#0f0f0e', .48, .35);
-for (let s = .38; s < beltLen - .5; s += .2) { const sp = spiral.find(q => q.s >= s); const p = sp.c.clone().addScaledVector(sp.n, ST / 2 + .007); const st = new T.Mesh(studG, studM); st.position.set(p.x, SW / 2, p.z); st.lookAt(p.x + sp.n.x * 2, SW / 2, p.z + sp.n.z * 2); beltG.add(st); }
+{ const studs = []; for (let s = .38; s < beltLen - .5; s += .2) { const sp = spiral.find(q => q.s >= s); const p = sp.c.clone().addScaledVector(sp.n, ST / 2 + .007); const st = new T.Mesh(studG, studM); st.position.set(p.x, SW / 2, p.z); st.lookAt(p.x + sp.n.x * 2, SW / 2, p.z + sp.n.z * 2); studs.push(st); } beltG.add(mergeMeshes(studs, studM)); }
 // hardware at the outer end: two keeper loops, then the detachable star buckle
 const end = spiral[NS]; const tangent = end.c.clone().sub(spiral[NS - 1].c).normalize();
 function frameAt(sp, off) { const g = new T.Group(); const t = spiral[Math.min(NS, sp + 1)].c.clone().sub(spiral[Math.max(0, sp - 1)].c).normalize(); const n = spiral[sp].n;
@@ -225,7 +233,7 @@ const sBase = new T.Mesh(new T.BoxGeometry(1.75, .14, 1.35), mat('#E2DCCF', .95)
 const dome = new T.Mesh(new T.SphereGeometry(.46, 48, 24, 0, Math.PI * 2, 0, Math.PI / 2), new T.MeshStandardMaterial({ map: earthTex, roughness: .75 })); dome.position.y = .14; stageG.add(dome);
 const fig = new T.Mesh(new T.CylinderGeometry(.018, .022, .13, 10), mat('#0d0d0c', .8)); fig.position.y = .14 + .46 + .065; stageG.add(fig);
 const figH = new T.Mesh(new T.SphereGeometry(.022, 12, 8), mat('#0d0d0c', .8)); figH.position.y = .14 + .46 + .145; stageG.add(figH);
-const crowdM = mat('#3a3631', .9); for (let i = 0; i < 90; i++) { const a = Math.random() * Math.PI * 2, r = .56 + Math.random() * .24; const px = Math.cos(a) * r, pz = Math.sin(a) * r * .85; if (Math.abs(px) > .84 || Math.abs(pz) > .64) continue; const c = new T.Mesh(new T.BoxGeometry(.018, .035, .018), crowdM); c.position.set(px, .157, pz); stageG.add(c); }
+const crowdM = mat('#3a3631', .9), crowdG = new T.BoxGeometry(.018, .035, .018), crowd = []; for (let i = 0; i < 90; i++) { const a = Math.random() * Math.PI * 2, r = .56 + Math.random() * .24; const px = Math.cos(a) * r, pz = Math.sin(a) * r * .85; if (Math.abs(px) > .84 || Math.abs(pz) > .64) continue; const c = new T.Mesh(crowdG, crowdM); c.position.set(px, .157, pz); crowd.push(c); } stageG.add(mergeMeshes(crowd, crowdM));
 const stageLight = new T.SpotLight(0xff3018, 0, 4, .6, .6, 1.2); stageLight.position.set(.2, 1.6, .4); stageLight.target = dome; stageG.add(stageLight);
 const haze = new T.Mesh(new T.ConeGeometry(.7, 1.4, 32, 1, true), new T.MeshBasicMaterial({ color: 0xff3a20, transparent: true, opacity: 0, depthWrite: false, side: T.DoubleSide, blending: T.AdditiveBlending })); haze.position.set(.1, .9, .2); stageG.add(haze);
 stageG.position.set(3.55, 0, -1.4); stageG.rotation.y = -.35;
@@ -333,14 +341,19 @@ function pick() { ray.setFromCamera(ndc, camera); const hits = ray.intersectObje
 function planeHit() { ray.setFromCamera(ndc, camera); return ray.ray.intersectPlane(plane, hp) ? hp : null; }
 cv.addEventListener('pointerdown', e => { if (viewS > .25) return; setNdc(e); if (!touched) { touched = true; if (ui.hint) ui.hint.classList.add('gone'); } opts.onPointerDown && opts.onPointerDown(); hideHover(); const it = pick(); down = { x: e.clientX, y: e.clientY, t: performance.now(), moved: false, it, lx: e.clientX, ly: e.clientY };
   if (inspected) { if (it === inspected) { cv.setPointerCapture(e.pointerId); down.rot = true; } return; }
-  if (!it) return; cv.setPointerCapture(e.pointerId); held = it; it.held = true; it.stackY = 0; it.tx = it.x; it.tz = it.z; const p = planeHit(); it.grab = p ? { x: p.x - it.x, z: p.z - it.z } : { x: 0, z: 0 }; });
+  if (!it) { if (e.pointerType === 'touch') { /* empty bench under a finger: pan the page like a normal swipe */ stopGlide(); down.pan = true; down.v = 0; down.lt = down.t; cv.setPointerCapture(e.pointerId); } return; }
+  cv.setPointerCapture(e.pointerId); held = it; it.held = true; it.stackY = 0; it.tx = it.x; it.tz = it.z; const p = planeHit(); it.grab = p ? { x: p.x - it.x, z: p.z - it.z } : { x: 0, z: 0 }; });
 cv.addEventListener('pointermove', e => { setNdc(e);
   if (down && Math.hypot(e.clientX - down.x, e.clientY - down.y) > 5) down.moved = true;
+  if (down && down.pan) { const dy = e.clientY - down.ly, now = performance.now(); down.v = dy / Math.max(8, now - down.lt); down.lt = now; down.ly = e.clientY; window.scrollBy(0, -dy); return; }
   if (down && down.rot && inspected) { const dx = e.clientX - down.lx, dy = e.clientY - down.ly; down.lx = e.clientX; down.ly = e.clientY; inspected.userQ.premultiply(new T.Quaternion().setFromAxisAngle(up, dx * .012)).premultiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(1, 0, 0), dy * .012)); return; }
   if (held) { const p = planeHit(); if (p) { held.tx = Math.max(-5.2, Math.min(5.2, p.x - held.grab.x)); held.tz = Math.max(-2.9, Math.min(2.9, p.z - held.grab.z)); } cv.style.cursor = 'grabbing'; }
   else if (!inspected && e.pointerType === 'mouse' && viewS < .25) { hoverIt = pick(); cv.style.cursor = hoverIt ? 'grab' : 'default'; if (hoverIt) showHover(hoverIt, e); else hideHover(); } });
 cv.addEventListener('pointerleave', hideHover);
-function up_() { if (held) { const it = held; held = null; it.held = false; if (down && !down.moved && performance.now() - down.t < 350) click(it); } else if (inspected && down && !down.moved && !down.rot) release(); down = null; }
+let glideRaf = 0; function stopGlide() { cancelAnimationFrame(glideRaf); glideRaf = 0; }
+function glide(v) { let last = performance.now(); const f = now => { const dt = now - last; last = now; v *= Math.exp(-dt / 325); if (Math.abs(v) < .02) return; window.scrollBy(0, -v * dt); glideRaf = requestAnimationFrame(f); }; glideRaf = requestAnimationFrame(f); }
+function up_(e) { if (down && down.pan) { if (down.moved && e && e.type === 'pointerup') glide(down.v); down = null; return; }
+  if (held) { const it = held; held = null; it.held = false; if (down && !down.moved && performance.now() - down.t < 350) click(it); } else if (inspected && down && !down.moved && !down.rot) release(); down = null; }
 cv.addEventListener('pointerup', up_); cv.addEventListener('pointercancel', up_);
 cv.addEventListener('wheel', e => { if (!held) return; e.preventDefault(); held.rotY += e.deltaY * .004; }, { passive: false });
 
@@ -395,6 +408,6 @@ api.setView = t => { viewT = Math.max(0, Math.min(1, t)); };
 api.getView = () => viewS;
 const ro = new ResizeObserver(resize); ro.observe(stage);
 resize();
-api.destroy = () => { api.stop(); stopMusic(); window.removeEventListener('keydown', onKey); ro.disconnect(); renderer.dispose(); if (cv.parentNode) cv.parentNode.removeChild(cv); };
+api.destroy = () => { api.stop(); stopGlide(); stopMusic(); window.removeEventListener('keydown', onKey); ro.disconnect(); scene.traverse(o => { if (o.geometry) o.geometry.dispose(); const ms = o.material ? [].concat(o.material) : []; ms.forEach(m => { for (const k in m) if (m[k] && m[k].isTexture) m[k].dispose(); m.dispose(); }); }); renderer.dispose(); renderer.forceContextLoss(); /* free the GL context now, not when Chrome runs out */ if (cv.parentNode) cv.parentNode.removeChild(cv); };
 return api;
 }
